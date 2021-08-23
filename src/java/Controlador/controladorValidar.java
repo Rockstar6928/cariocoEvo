@@ -88,7 +88,6 @@ public class controladorValidar extends HttpServlet {
             request.setAttribute("iderror", usu.getpError());
             request.setAttribute("msgerror", usu.getpMsg_error());
             if (usu.getpError() == 0 && usu.getUsuEstado() == 1) {
-
                 request.getRequestDispatcher("vistaPrueba.jsp").forward(request, response);
             } else {
                 request.setAttribute("openit", 1);
@@ -187,6 +186,7 @@ public class controladorValidar extends HttpServlet {
                     out.println("<script type=\"text/javascript\">");
                     out.println("location='vistaPrueba.jsp';");
                     out.println("</script>");
+                    //Borrar dato del diccionario cuando entra al if
                     break;
                 } else {
                     out.println("<script type=\"text/javascript\">");

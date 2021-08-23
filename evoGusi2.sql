@@ -1,4 +1,4 @@
-#drop database if exists polleriaGusi;
+#drop database if exists polleriaCarioco;
 #drop table if exists tbl_Detalle_Pedido;
 #drop table if exists tbl_Producto;
 #drop table if exists tbl_Pedido;
@@ -12,8 +12,8 @@
 #drop table if exists tbl_Estado;
 #drop table if exists tbl_EstadoCabecera;
 
-create database polleriaGusi;
-use polleriaGusi;
+create database polleriaCarioco;
+use polleriaCarioco;
 
 #TABLES
 CREATE TABLE tbl_EstadoCabecera (
@@ -140,6 +140,7 @@ insert into tbl_Estado values (1,1,"Habilitado");
 insert into tbl_Estado values (2,1,"Deshabilitado");
 
 insert into tbl_Perfil values (1,'Administrador',1);
+insert into tbl_Perfil values (2,'Cliente',1);
 
 insert into tbl_Usuario values(1,1,"y1709","y1709",1);
 insert into tbl_Empleado values(1,"nombreY","apellidoY","993416456","78914752",1);
@@ -228,9 +229,39 @@ SELECT  count(*) INTO V_COUNT3 FROM tbl_Empleado emp
 END IF;
 END BLOCK1;
 END;
-select * from tbl_Usuario;
+#select * from tbl_Usuario;
+#call spF_ChecarDatosRegister("y17091","78914742",@p_error,@p_msg_error); select @p_error,@p_msg_error;
 
-call spF_ChecarDatosRegister("y17091","78914742",@p_error,@p_msg_error); select @p_error,@p_msg_error;
+DELIMITER $$
+CREATE DEFINER=root@localhost procedure spF_agregarUSUARIO(
+_mail_usu varchar(50), 
+_usu_password varchar(50)
+)
+begin
+insert into tbl_Usuario(mail_usu,nickname_usuario,usu_password,id_perfil,usu_estado)
+VALUES (_mail_usu,_usu_password,2,1);
+END;
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_obtenerMaxUser()
+BEGIN
+select max(idUser) from tbl_Usuario;
+END;
+
+DELIMITER $$
+CREATE DEFINER=root@localhost procedure spF_agregarCliente(
+_nom_cliente varchar(50), 
+_ape_cliente varchar(58),
+_tel_cliente varchar(9),
+_dni_cliente char(8),
+_fecha_nac varchar(50),
+_dir_cliente varchar(100),
+_id_usu int(11)
+)
+begin
+insert into tbl_Cliente(nombreCliente,apellidoCliente,celularCliente,dniCliente,fechaNacimiento,direccionCliente,idUser)
+VALUES (_nom_cliente,_ape_cliente,_tel_cliente,_dni_cliente,STR_TO_DATE(_fecha_nac, '%Y-%m-%d'),_dir_cliente,_id_usu);
+END;
 
 
 
