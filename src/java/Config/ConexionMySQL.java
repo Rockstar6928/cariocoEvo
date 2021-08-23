@@ -21,7 +21,7 @@ public class ConexionMySQL implements IConexion {
     public Connection getConexion() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/polleriaGusi", "root", "");
+            cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/polleriaCarioco", "root", "");
             //System.out.println("Conexion 1");
         } catch (Exception e) {
             //System.out.println("Conexion fallida, causa: " + e);
