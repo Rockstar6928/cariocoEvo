@@ -13,12 +13,12 @@
         <title>Carioco Chicken | Login</title>
         <link rel="stylesheet" href="css/stylesOwn.css">
         <link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css" type="text/css">
-        <link rel="icon" type="image/x-icon" href="img/carioco.png">
+        <link rel="icon" type="image/x-icon" href="img/carioco.jpeg">
     </head>
     <body style="background-color: #23282B">
         <form method="POST" action="controladorValidar">
             <div id="logo-login">
-                <img src="img/carioco.png">
+                <img src="img/carioco.jpeg">
             </div>
             <div class="alert alert-danger d-none" id="msg-alert" role="alert">
                 <p>${msgerror}</p>

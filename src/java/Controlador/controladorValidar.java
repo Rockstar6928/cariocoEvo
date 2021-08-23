@@ -11,10 +11,24 @@ import ModeloDAO.ValidarUsuario;
 import ModeloDAO.revisarDatosRegistro;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -22,10 +36,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class controladorValidar extends HttpServlet {
 
+    String nro = "";
     Usuario usu = new Usuario();
     Cliente cli = new Cliente();
     ValidarUsuario valUsu = new ValidarUsuario();
     revisarDatosRegistro checkData = new revisarDatosRegistro();
+    Map<String, Integer> map = new HashMap<>();
+    String destinatario = "";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -59,7 +76,9 @@ public class controladorValidar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession sesion1 = request.getSession();
         String op = request.getParameter("accion");
+        PrintWriter out = response.getWriter();
         if (op.equals("Ingresar")) {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
@@ -96,19 +115,90 @@ public class controladorValidar extends HttpServlet {
                 String celularClienteRegistro = request.getParameter("celularClienteRegistro");
                 String fechaNacimientoClienteRegistro = request.getParameter("fechaNacimientoClienteRegistro");
                 String pass1ClienteRegistro = request.getParameter("pass1ClienteRegistro");
-                
+
                 //Enviar Correos
-                
-                
-                
+                Properties propiedad = new Properties();
+                propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
+                propiedad.setProperty("mail.smtp.starttls.enable", "true");
+                propiedad.setProperty("mail.smtp.port", "587");
+                propiedad.setProperty("mail.smtp.auth", "true");
+                Session sesion = Session.getDefaultInstance(propiedad);
+                String correoEnvia = "infopolleriacarioco@gmail.com";
+                String contrasena = "evo20212gato";
+                destinatario = request.getParameter("emailClienteRegistro");
+                String asunto = "Activa tu cuenta: código de confirmación";
+                String mensaje;
+                int i = 0, cant = 5, rango = 10;
+                int arreglo[] = new int[cant];
+                arreglo[i] = (int) (Math.random() * rango);
+                for (i = 1; i < cant; i++) {
+                    arreglo[i] = (int) (Math.random() * rango);
+                    for (int j = 0; j < i; j++) {
+                        if (arreglo[i] == arreglo[j]) {
+                            i--;
+                        }
+                    }
+                }
+                nro = "";
+                for (int k = 0; k < cant; k++) {
+                    nro += arreglo[k] + "";
+                }
+                MimeMessage mail = new MimeMessage(sesion);
+                try {
+                    request.setAttribute("nombreCliente", nombreClienteRegistro);
+                    mensaje = "Bienvenido/a " + nombreClienteRegistro + " " + apellidosClienteRegistro + ", este es tu código de confirmación: <br>" + "<strong>" + nro + "</strong>";
+                    BodyPart text = new MimeBodyPart();
+                    text.setContent(mensaje, "text/html");
+                    BodyPart imagen = new MimeBodyPart();
+                    imagen.setDataHandler(new DataHandler(new FileDataSource("D:\\carioco.jpeg")));
+                    imagen.setFileName("Carioco.jpeg");
+                    MimeMultipart partes = new MimeMultipart();
+                    partes.addBodyPart(text);
+                    partes.addBodyPart(imagen);
+
+                    mail.setFrom(new InternetAddress(correoEnvia));
+                    mail.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+                    mail.setSubject(asunto);
+                    mail.setContent(partes);
+
+                    Transport transporte = sesion.getTransport("smtp");
+                    transporte.connect(correoEnvia, contrasena);
+                    transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
+                    transporte.close();
+
+                    //Agregamos diccionario para separar los codigos, 
+                    //ya que podemos recibir decenas de peticiones para crearnos una cuenta
+                    map.put(destinatario, Integer.parseInt(nro));
+
+                    //Lo direcciono para que digite el código
+                    request.getRequestDispatcher("activaCuentaCliente.jsp").forward(request, response);
+                    System.out.println("Correo enviado correctamente | Destino: " + destinatario);
+                } catch (Exception e) {
+                    System.out.println("Error en el envío de correo!" + destinatario + ", posible causa: " + e);
+                }
+
             }
 
+        } else if (op.equals("Activar")) {
+            //Ver lo del diccionario correo:codigo
+            String codigo = request.getParameter("codigoActiva");
+            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                if (map.containsKey(destinatario) && map.containsValue(Integer.parseInt(codigo))) {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("location='vistaPrueba.jsp';");
+                    out.println("</script>");
+                    break;
+                } else {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("location='activaCuentaCliente.jsp';");
+                    out.println("</script>");
+                }
+            }
         } else {
             request.getRequestDispatcher("indexGusi.jsp").forward(request, response);
         }
     }
 
-    
     /**
      * Returns a short description of the servlet.
      *

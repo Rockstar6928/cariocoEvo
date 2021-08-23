@@ -69,7 +69,7 @@ public final class indexGusi_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <link href=\"https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700\" rel=\"stylesheet\">\n");
       out.write("        <link href=\"https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700\" rel=\"stylesheet\">\n");
       out.write("        <link href=\"https://fonts.googleapis.com/css?family=Dancing+Script:400,700\" rel=\"stylesheet\">\n");
-      out.write("        <link rel=\"icon\" type=\"image/x-icon\" href=\"img/carioco.png\">\n");
+      out.write("        <link rel=\"icon\" type=\"image/x-icon\" href=\"img/carioco.jpeg\">\n");
       out.write("\n");
       out.write("    </head>\n");
       out.write("</head>\n");
@@ -122,7 +122,7 @@ public final class indexGusi_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <div class=\"container\">\n");
       out.write("            <div class=\"row\">\n");
       out.write("                <div class=\"col-xs-12 col-md-6\">\n");
-      out.write("                    <div class=\"about-img\" id=\"about-carioco\"><img src=\"img/carioco.png\" class=\"img-responsive\" alt=\"\"></div>\n");
+      out.write("                    <div class=\"about-img\" id=\"about-carioco\"><img src=\"img/carioco.jpeg\" class=\"img-responsive\" alt=\"\"></div>\n");
       out.write("                </div>\n");
       out.write("                <div class=\"col-xs-12 col-md-6\">\n");
       out.write("                    <div class=\"about-text\">\n");

@@ -30,7 +30,7 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700" rel="stylesheet">
-        <link rel="icon" type="image/x-icon" href="img/carioco.png">
+        <link rel="icon" type="image/x-icon" href="img/carioco.jpeg">
 
     </head>
 </head>
@@ -83,7 +83,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-6">
-                    <div class="about-img" id="about-carioco"><img src="img/carioco.png" class="img-responsive" alt=""></div>
+                    <div class="about-img" id="about-carioco"><img src="img/carioco.jpeg" class="img-responsive" alt=""></div>
                 </div>
                 <div class="col-xs-12 col-md-6">
                     <div class="about-text">

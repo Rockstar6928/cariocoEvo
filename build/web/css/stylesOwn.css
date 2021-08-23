@@ -91,13 +91,17 @@ footer p{
     margin-right: auto;
     padding-bottom: 20px;
     transition: all 300ms;
+    border-radius: 15%;
+    width: 200px;
+    height: 220px;
 }
 
 #logo-login img:hover{
     transform: scale(1.2,1.2);
 }
 
-#btn-login{
+#btn-login,
+#btn-activa{
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -142,7 +146,8 @@ footer p{
 }
 
 #box-login label,
-#emailHelp{
+#emailHelp,
+#msg-welcome-activa{
     color: white;
 }
 
@@ -157,4 +162,8 @@ footer p{
 #about-carioco img{
     display: block;
     width: 450px;
+}
+
+#codigo-activa{
+    text-align: center
 }
