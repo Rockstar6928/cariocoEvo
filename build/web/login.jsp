@@ -27,7 +27,7 @@
                 <div class="col-lg-3 col-sm-6 col-xs-6">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Correo</label>
-                        <input type="email" name="email" class="form-control" id="email-login" aria-describedby="emailHelp" required="required">
+                        <input type="text" name="email" class="form-control" id="email-login" aria-describedby="emailHelp" required="required">
                         <div id="emailHelp" class="form-text">Nosotros nunca compartiremos tú email con alguien mas...</div>
                     </div>
                     <div class="mb-3">
@@ -50,11 +50,14 @@
         </footer>
 
         <script type="text/javascript">
+
             var openGet =<%=request.getAttribute("openit")%>;
             var divAlert = document.getElementById("msg-alert");
             if (openGet === 1) {
                 divAlert.classList.remove("d-none");
             }
         </script>
+        <script type="text/javascript" src="js/jquery/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="css/bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>

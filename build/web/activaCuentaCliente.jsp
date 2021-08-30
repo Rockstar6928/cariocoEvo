@@ -43,6 +43,54 @@
         <footer>
             <p class="text-center mt-5">&COPY; Carioco Chicken Todos los derechos reservados - 2021</p>
         </footer>
+
+        <!--Modal para activar-->
+
+        <div class="modal fade"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Estado de código</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalLogin">
+                        ...
+                    </div> 
+
+                </div>
+            </div>
+        </div>
+
         <script type="text/javascript" src="js/validandoActivaCuenta/validaActivaCuenta.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="css/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+                            window.addEventListener('load', function () {
+                                document.getElementById("modalLogin").innerHTML = "";
+                                var rs =<%=request.getAttribute("rs")%>;
+                                if (rs === 1) {
+                                    $('#myModal').modal({backdrop: 'static', keyboard: false})
+                                    document.getElementById("modalLogin").innerHTML = `
+                                    <h1 style="text-align: center;">Código correcto</h1>
+                                    <br>
+                                    <p  style="text-align: center;">Te estamos llevando al login</p>`;
+                                    $("#myModal").modal('show');
+
+                                    setTimeout(function () {
+                                        window.location.href = 'login.jsp';
+                                    }, 3000);
+
+                                }
+                                if (rs === 2) {
+                                    $('#myModal').modal({backdrop: 'static', keyboard: false})
+                                    document.getElementById("modalLogin").innerHTML = `
+                                    <h1 style="text-align: center;">Código incorrecto</h1>`;
+                                    $("#myModal").modal('show');
+
+                                }
+                            });
+        </script>
     </body>
 </html>

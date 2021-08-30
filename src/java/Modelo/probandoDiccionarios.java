@@ -27,10 +27,13 @@ public class probandoDiccionarios {
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             if (map.containsKey(correo) && map.containsValue(codigo)) {
                 System.out.println("ENCONTRADO");
+                map.remove(correo);
                 break;
             }
 
         }
+
+        System.out.println("Mapa: " + map);
 
     }
 

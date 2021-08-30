@@ -92,6 +92,7 @@ public final class indexGusi_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                    <li><a href=\"#team\" class=\"page-scroll\">Protocolo</a></li>\n");
       out.write("                    <!--<li><a href=\"ControladorVistas?menu=vistas&&accion=listarproducto\" onclick=\"Buscar()\" target=\"myFrame\" class=\"page-scroll\">Menu</a></li>-->\n");
       out.write("                    <li><a href=\"#call-reservation\" class=\"page-scroll\">Ordena</a></li>\n");
+      out.write("                    <li><a href=\"carrito.jsp\" class=\"page-scroll\" target=\"_blank\">Menu</a></li>\n");
       out.write("                    <li><a href=\"login.jsp\" >Login</a></li>\n");
       out.write("                </ul>\n");
       out.write("            </div>\n");
@@ -138,7 +139,8 @@ public final class indexGusi_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            </div>\n");
       out.write("        </div>\n");
       out.write("    </div>\n");
-      out.write("\n");
+      out.write("    \n");
+      out.write("    \n");
       out.write("\n");
       out.write("    <!-- Call Reservation Section -->\n");
       out.write("    <div id=\"call-reservation\" class=\"text-center\">\n");

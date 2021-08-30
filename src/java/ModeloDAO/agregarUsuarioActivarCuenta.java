@@ -7,6 +7,7 @@ package ModeloDAO;
 
 import Config.ConexionMySQL;
 import Interfaces.IAgregarUsuario;
+import Modelo.Md5;
 import Modelo.Usuario;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -21,6 +22,7 @@ public class agregarUsuarioActivarCuenta implements IAgregarUsuario<Usuario> {
     ConexionMySQL obcn = new ConexionMySQL();
     CallableStatement cl;
     int r;
+    Md5 md5 = new Md5();
 
     @Override
     public int agregarUsuario(Usuario t) {
@@ -28,7 +30,7 @@ public class agregarUsuarioActivarCuenta implements IAgregarUsuario<Usuario> {
             cn = obcn.getConexion();
             cl = (CallableStatement) cn.prepareCall("{CALL spF_agregarUSUARIO(?,?)}");
             cl.setString(1, t.getMailUser());
-            cl.setString(2, t.getPasswordUser());
+            cl.setString(2, md5.ecnode(t.getPasswordUser()));
             cl.executeUpdate();
         } catch (Exception e) {
         }

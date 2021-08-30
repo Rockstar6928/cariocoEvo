@@ -4,9 +4,33 @@
         <servlet-name>controladorValidar</servlet-name>
         <servlet-class>Controlador.controladorValidar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorCliente</servlet-name>
+        <servlet-class>Controlador.ControladorCliente</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControladorCategoria</servlet-name>
+        <servlet-class>Controlador.ControladorCategoria</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControladorProducto</servlet-name>
+        <servlet-class>Controlador.ControladorProducto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controladorValidar</servlet-name>
         <url-pattern>/controladorValidar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorCliente</servlet-name>
+        <url-pattern>/ControladorCliente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorCategoria</servlet-name>
+        <url-pattern>/ControladorCategoria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorProducto</servlet-name>
+        <url-pattern>/ControladorProducto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

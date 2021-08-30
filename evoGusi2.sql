@@ -111,8 +111,12 @@ CONSTRAINT fk_categoria_id FOREIGN KEY(idCat) references tbl_Categoria(idCat)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 create table tbl_Pedido(
+#Creo que en lugar de idUser tendría que ir idCliente y idEmpleado
 idPedido int(11) not null auto_increment,
 idUser int(11) not null,
+#idCliente
+#idEmpleado
+#consultar a mi enamorada la más hermooooooooooooooooooooooooosa de la tierra, claro despues de mi mamá
 fecPedido date not null,
 numSeriePedido varchar(244)  not null,
 montVenta decimal (18,2) not null,
@@ -135,15 +139,42 @@ CONSTRAINT FK_idProducto FOREIGN KEY (idPro) REFERENCES tbl_Producto(idPro)
 
 #INSERTS
 insert into tbl_EstadoCabecera values (1,"Usuario");
+insert into tbl_EstadoCabecera values (2,"Categorias");
+insert into tbl_EstadoCabecera values (3,"Productos");
+
+
 
 insert into tbl_Estado values (1,1,"Habilitado");
 insert into tbl_Estado values (2,1,"Deshabilitado");
+insert into tbl_Estado values (1,2,"Visible");
+insert into tbl_Estado values (2,2,"Oculta");
+insert into tbl_Estado values (1,3,"Visible");
+insert into tbl_Estado values (2,3,"Oculto");
+
+
+insert into tbl_Menu values(1,"Home","vistaPrincipalAdministrativa.jsp","nav-link","");
+insert into tbl_Menu values(2,"Clientes","ControladorCliente?menu=cliente&&accion=listar","nav-link","");
+insert into tbl_Menu values(3,"Categorias","ControladorCategoria?menu=categoria&&accion=listar","nav-link","");
+insert into tbl_Menu values(4,"Productos","ControladorProducto?menu=producto&&accion=listar","nav-link","");
 
 insert into tbl_Perfil values (1,'Administrador',1);
 insert into tbl_Perfil values (2,'Cliente',1);
 
-insert into tbl_Usuario values(1,1,"y1709","y1709",1);
+INSERT INTO tbl_Menu_Perfil VALUES (1,1);
+INSERT INTO tbl_Menu_Perfil VALUES (1,2);
+INSERT INTO tbl_Menu_Perfil VALUES (1,3);
+INSERT INTO tbl_Menu_Perfil VALUES (1,4);
+
+insert into tbl_Usuario values(1,1,"y1709","cqSnNZ/C3c0=",1);
 insert into tbl_Empleado values(1,"nombreY","apellidoY","993416456","78914752",1);
+
+insert into tbl_Categoria values(1,"Promociones","ControladorVistas?menu=vistas&&accion=listarsortcat","nav-link","myFrame",1);
+insert into tbl_Categoria values(3,"Brasas","ControladorVistas?menu=vistas&&accion=listarsortcat","nav-link","myFrame",1);
+insert into tbl_Categoria value(4,"Hamburguesas","ControladorVistas?menu=vistas&&accion=listarsortcat","nav-link","myFrame",1);
+
+insert into tbl_Producto values(1,3,"UN OCTAVO","1/8 pollo a la brasa + papas fritas + ensalada",8.90,"Brasas_01.png",1);
+insert into tbl_Producto values(2,3,"UN CUARTO","1/4 pollo a la brasa + papas fritas + ensalada",14.90,"Brasas_02.png",1);
+insert into tbl_Producto values(3,4,"HAMBURGUESA CLASICA","Hamburguesa de pollo o carne + papas fritas o al hilo + ensalada",4.90,"Hamburguesa_013.png",1);
 
 DELIMITER $$
 CREATE DEFINER=root@localhost PROCEDURE spF_validarUsuario(
@@ -229,8 +260,7 @@ SELECT  count(*) INTO V_COUNT3 FROM tbl_Empleado emp
 END IF;
 END BLOCK1;
 END;
-#select * from tbl_Usuario;
-#call spF_ChecarDatosRegister("y17091","78914742",@p_error,@p_msg_error); select @p_error,@p_msg_error;
+
 
 DELIMITER $$
 CREATE DEFINER=root@localhost procedure spF_agregarUSUARIO(
@@ -238,9 +268,10 @@ _mail_usu varchar(50),
 _usu_password varchar(50)
 )
 begin
-insert into tbl_Usuario(mail_usu,nickname_usuario,usu_password,id_perfil,usu_estado)
+insert into tbl_Usuario(mailUser,passwordUser,idPerfil,usuEstado)
 VALUES (_mail_usu,_usu_password,2,1);
 END;
+
 
 DELIMITER $$
 CREATE DEFINER=root@localhost PROCEDURE spF_obtenerMaxUser()
@@ -262,6 +293,223 @@ begin
 insert into tbl_Cliente(nombreCliente,apellidoCliente,celularCliente,dniCliente,fechaNacimiento,direccionCliente,idUser)
 VALUES (_nom_cliente,_ape_cliente,_tel_cliente,_dni_cliente,STR_TO_DATE(_fecha_nac, '%Y-%m-%d'),_dir_cliente,_id_usu);
 END;
+
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_validarMenu(
+IN _id_perfil int(11)
+)
+BEGIN
+
+    SELECT T1.idPerfil, T1.desPerfil, T2.idMenu, T3.desMenu, T3.rutaMenu, T3.classMenu, T3.targetMenu
+	FROM tbl_Perfil T1
+	INNER JOIN tbl_Menu_Perfil T2 ON T2.idPerfil = T1.idPerfil
+    INNER JOIN tbl_Menu T3 ON T3.idMenu = T2.idMenu
+	WHERE T1.idPerfil = _id_perfil;	
+END;
+
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_ListarCats()
+BEGIN
+SELECT T1.idCat, T1.desCat, T1.rutaMenu, T1.classMenu, T1.targetMenu,T2.desEstado
+FROM tbl_Categoria T1
+inner join tbl_Estado T2 on T2.idEstadoCabecera=2 and T2.idEstado=T1.catEstado
+where T1.catEstado=1
+order by T1.idCat;
+END;
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_BuscarCAT(
+_des_cat  varchar(50),
+_cat_estado int)
+begin
+SELECT T1.idCat, T1.desCat, T1.rutaMenu, T1.classMenu, T1.targetMenu,T2.desEstado
+FROM tbl_Categoria T1
+inner join tbl_Estado T2 on T2.idEstadoCabecera=2 and T2.idEstado=T1.catEstado
+WHERE  (_des_cat=''  or UPPER(T1.desCat) like CONCAT('%',UPPER(TRIM(IFNULL(_des_cat,''))),'%')) 
+and  (_cat_estado=-1  or T2.idEstado=_cat_estado);
+END;
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_OcultarCategoria(in _COD_CAT int)
+begin
+UPDATE tbl_Categoria SET catEstado=2
+WHERE idCat=_COD_CAT and catEstado=1;
+END;
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_MostrarCategoria(in _id_cat int)
+begin
+UPDATE tbl_Categoria SET catEstado=1
+WHERE idCat=_id_cat and catEstado=2;
+END;
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_DeleteCAT(in _ID_CAT int)
+BEGIN
+DELETE FROM tbl_Categoria
+WHERE idCat=_ID_CAT;
+END;
+
+#select * from tbl_Usuario;
+select * from tbl_Categoria;
+
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_agregarCAT(_des_cat varchar(50),
+OUT p_error int,
+OUT p_msg_error varchar(1000))
+begin
+DECLARE V_COUNT INT DEFAULT 0;
+    SET p_error = 0;
+	SET p_msg_error = '';
+BLOCK1: BEGIN	
+	SELECT  count(*)
+    INTO V_COUNT
+    FROM tbl_Categoria cat
+	where 
+   cat.desCat = _des_cat;
+IF IFNULL(V_COUNT,0) = 1 THEN
+			SET p_error = 101;
+			SET p_msg_error = 'La categoría que desea registrar, ya existe en el sistema';	
+            select p_error,p_msg_error;
+			LEAVE BLOCK1;
+END IF;
+insert into tbl_Categoria(desCat,rutaMenu,classMenu,targetMenu,catEstado)
+VALUES (_des_cat,"ControladorVistas?menu=vistas&&accion=listarsortcat","nav-link","myFrame",1);
+end BLOCK1;
+END;
+
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_ListarCATID(in _ID_CAT int)
+BEGIN
+select * from tbl_Categoria
+where idCat=_ID_CAT;
+END;
+
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_actualizaCAT (
+in _ID_CAT int(11),
+in _des_cat varchar(50),
+OUT p_error int,
+OUT p_msg_error varchar(1000)
+)
+begin
+DECLARE V_COUNT INT DEFAULT 0;
+    SET p_error = 0;
+	SET p_msg_error = '';
+BLOCK1: BEGIN	
+	SELECT  count(*) INTO V_COUNT FROM tbl_Categoria u
+	where u.desCat = _des_cat and u.idCat<>_ID_CAT;
+IF IFNULL(V_COUNT,0) = 1 THEN
+			SET p_error = 101;
+			SET p_msg_error = 'El nombre de la categoría ingresado, ya existe!';	
+            select p_error,p_msg_error;
+			LEAVE BLOCK1;
+END IF;
+UPDATE tbl_Categoria SET desCat=_des_cat WHERE idCat=_ID_CAT;
+end BLOCK1;
+END;
+
+
+DELIMITER $$
+CREATE DEFINER=root@localhost procedure spF_ListaProductosGeneral()
+begin
+select T1.idPro,T2.desCat,T1.nomPro,T1.descPro,T1.precioPro,T1.imgPro,T3.desEstado
+from tbl_Producto T1
+inner join tbl_categoria T2 on T2.idCat=T1.idCat
+inner join tbl_Estado T3 on T3.idEstadoCabecera=3 and  T3.idEstado=T1.proEstado
+where T1.proEstado=1
+order by T1.idPro;
+END;
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_BuscarProducto(
+_id_cat int,
+ _DES_PRO varchar(50),
+ _estado int )
+begin
+select T1.idPro,T2.desCat,T1.nomPro,T1.descPro,T1.precioPro,T1.imgPro,T3.desEstado
+from tbl_Producto T1
+inner join tbl_categoria T2 on T2.idCat=T1.idCat
+inner join tbl_Estado T3 on T3.idEstadoCabecera=3 and  T3.idEstado=T1.proEstado
+WHERE (_id_cat=-1 or T2.idCat=_id_cat)
+and (_DES_PRO=''  or UPPER(T1.nomPro) LIKE CONCAT('%',UPPER(TRIM(IFNULL(_DES_PRO,''))),'%') or  UPPER(T1.descPro) LIKE CONCAT('%',UPPER(TRIM(IFNULL(_DES_PRO,''))),'%'))
+and  (_estado=-1  or T3.idEstado=_estado)
+ORDER BY T1.idPro;
+END;
+
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_OcultarProducto(in _COD_PRO int)
+begin
+UPDATE tbl_Producto SET proEstado=2
+WHERE idPro=_COD_PRO and proEstado=1;
+END;
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_MostrarProducto(in _COD_PRO int)
+begin
+UPDATE tbl_Producto SET proEstado=1
+WHERE idPro=_COD_PRO and proEstado=2;
+END;
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_DeletePRO(in _COD_PRO int)
+BEGIN
+DELETE FROM tbl_Producto
+WHERE idPro=_COD_PRO;
+END;
+
+
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_agregarPRO(
+_COD_CAT int,
+_NOM_PRO varchar(50),
+_desc_pro varchar(50),
+_PRECIO decimal(18,2),
+img_pro_ varchar(200),
+OUT p_error int,
+OUT p_msg_error varchar(1000)
+)
+begin
+DECLARE V_COUNT INT DEFAULT 0;
+    SET p_error = 0;
+	SET p_msg_error = '';
+BLOCK1: BEGIN	
+	SELECT  count(*)
+    INTO V_COUNT
+    FROM tbl_Producto u
+	where u.idCat=_COD_CAT and u.nomPro = _NOM_PRO;
+IF IFNULL(V_COUNT,0) = 1 THEN
+			SET p_error = 101;
+			SET p_msg_error = 'Producto que deseas agregar, ya existe';	
+			LEAVE BLOCK1;
+END IF;
+insert into tbl_Producto(idCat,nomPro,descPro,precioPro,imgPro,proEstado)
+VALUES (_COD_CAT,_NOM_PRO,_desc_pro,_PRECIO,img_pro_,1);
+END BLOCK1;
+END;
+
+
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE spF_ListarPROID(in _COD_PRO int)
+begin
+select * from tbl_Producto
+where idPro=_COD_PRO;
+END;
+
+call spF_ListarPROID(4);
+
+
+
+
+
+
 
 
 

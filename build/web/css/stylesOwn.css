@@ -127,7 +127,8 @@ footer p{
     margin-top: 30px;
 }
 
-#msg-alert{
+#msg-alert,
+#msg-alert2{
     text-align: center;
     width: 15%;
     margin-left: auto;

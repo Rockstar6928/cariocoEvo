@@ -6,12 +6,20 @@
 package Controlador;
 
 import Modelo.Cliente;
+import Modelo.Menu;
+import Modelo.Perfil;
 import Modelo.Usuario;
+import ModeloDAO.ObtenerUsuarioMaximo;
+import ModeloDAO.ValidarMenuDAO;
 import ModeloDAO.ValidarUsuario;
+import ModeloDAO.agregarClienteActivar;
+import ModeloDAO.agregarUsuarioActivarCuenta;
 import ModeloDAO.revisarDatosRegistro;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.activation.DataHandler;
@@ -37,16 +45,33 @@ import javax.servlet.http.HttpSession;
 public class controladorValidar extends HttpServlet {
 
     String nro = "";
+    String nombreClienteRegistro = "";
+    String direccionClienteRegistro = "";
+    String apellidosClienteRegistro = "";
+    String celularClienteRegistro = "";
+    String fechaNacimientoClienteRegistro = "";
+    String pass1ClienteRegistro = "";
     Usuario usu = new Usuario();
     Cliente cli = new Cliente();
+    Menu m = new Menu();
     ValidarUsuario valUsu = new ValidarUsuario();
     revisarDatosRegistro checkData = new revisarDatosRegistro();
+    ValidarMenuDAO valMenuDao = new ValidarMenuDAO();
     Map<String, Integer> map = new HashMap<>();
     String destinatario = "";
 
+    agregarUsuarioActivarCuenta addUser = new agregarUsuarioActivarCuenta();
+    ObtenerUsuarioMaximo getMaxUser = new ObtenerUsuarioMaximo();
+    agregarClienteActivar addCliente = new agregarClienteActivar();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        HttpSession sesion1 = request.getSession();
+        String accion = request.getParameter("accion");
+        if (accion.equals("cerrar")) {
+            sesion1.setAttribute("username", null);
+            request.getRequestDispatcher("indexGusi.jsp").forward(request, response);
+        }
 
     }
 
@@ -85,10 +110,24 @@ public class controladorValidar extends HttpServlet {
             usu.setMailUser(email);
             usu.setPasswordUser(password);
             usu = valUsu.validarUsuario(usu);
+            //Validando los menus
+            List lista = new ArrayList();
+            m.setIdPerfil(usu.getIdPerfil());
+            lista = valMenuDao.listarMenu(m);
+            //Opciones del menu por rol
+            sesion1.setAttribute("listadoMenu", lista);
+
+            //Datos del usuario que ingrea
+            sesion1.setAttribute("datosUsuario", usu);
+            //Validando errores
             request.setAttribute("iderror", usu.getpError());
             request.setAttribute("msgerror", usu.getpMsg_error());
-            if (usu.getpError() == 0 && usu.getUsuEstado() == 1) {
-                request.getRequestDispatcher("vistaPrueba.jsp").forward(request, response);
+            if (usu.getpError() == 0 && usu.getUsuEstado() == 1 && usu.getIdPerfil() == 1) {
+                sesion1.setAttribute("username", email);
+                request.getRequestDispatcher("vistaPrincipalAdministrativa.jsp").forward(request, response);
+            } else if (usu.getpError() == 0 && usu.getUsuEstado() == 1 && usu.getIdPerfil() == 2) {
+                sesion1.setAttribute("username", email);
+                request.getRequestDispatcher("vistaPrincipalCliente.jsp").forward(request, response);
             } else {
                 request.setAttribute("openit", 1);
                 request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -108,12 +147,12 @@ public class controladorValidar extends HttpServlet {
                 request.getRequestDispatcher("registroCliente.jsp").forward(request, response);
             } else {
                 //Una vez pasen ese filtro terminamos de pedir estos datos
-                String nombreClienteRegistro = request.getParameter("nombreClienteRegistro");
-                String direccionClienteRegistro = request.getParameter("direccionClienteRegistro");
-                String apellidosClienteRegistro = request.getParameter("apellidosClienteRegistro");
-                String celularClienteRegistro = request.getParameter("celularClienteRegistro");
-                String fechaNacimientoClienteRegistro = request.getParameter("fechaNacimientoClienteRegistro");
-                String pass1ClienteRegistro = request.getParameter("pass1ClienteRegistro");
+                nombreClienteRegistro = request.getParameter("nombreClienteRegistro");
+                direccionClienteRegistro = request.getParameter("direccionClienteRegistro");
+                apellidosClienteRegistro = request.getParameter("apellidosClienteRegistro");
+                celularClienteRegistro = request.getParameter("celularClienteRegistro");
+                fechaNacimientoClienteRegistro = request.getParameter("fechaNacimientoClienteRegistro");
+                pass1ClienteRegistro = request.getParameter("pass1ClienteRegistro");
 
                 //Enviar Correos
                 Properties propiedad = new Properties();
@@ -146,14 +185,21 @@ public class controladorValidar extends HttpServlet {
                 try {
                     request.setAttribute("nombreCliente", nombreClienteRegistro);
                     mensaje = "Bienvenido/a " + nombreClienteRegistro + " " + apellidosClienteRegistro + ", este es tu código de confirmación: <br>" + "<strong>" + nro + "</strong>";
+
+                    BodyPart codigo = new MimeBodyPart();
+                    codigo.setContent(mensaje, "text/html");
+
                     BodyPart text = new MimeBodyPart();
-                    text.setContent(mensaje, "text/html");
+                    text.setDataHandler(new DataHandler(new FileDataSource("C:\\Users\\USER\\Documentos\\NetBeansProjects\\GusiEvolucion\\web\\Correo.html")));
+                    //text.setContent(mensaje, "text/html");                   
+
                     BodyPart imagen = new MimeBodyPart();
                     imagen.setDataHandler(new DataHandler(new FileDataSource("D:\\carioco.jpeg")));
                     imagen.setFileName("Carioco.jpeg");
                     MimeMultipart partes = new MimeMultipart();
                     partes.addBodyPart(text);
                     partes.addBodyPart(imagen);
+                    partes.addBodyPart(codigo);
 
                     mail.setFrom(new InternetAddress(correoEnvia));
                     mail.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
@@ -183,15 +229,28 @@ public class controladorValidar extends HttpServlet {
             String codigo = request.getParameter("codigoActiva");
             for (Map.Entry<String, Integer> entry : map.entrySet()) {
                 if (map.containsKey(destinatario) && map.containsValue(Integer.parseInt(codigo))) {
-                    out.println("<script type=\"text/javascript\">");
-                    out.println("location='vistaPrueba.jsp';");
-                    out.println("</script>");
+                    /*out.println("<script type=\"text/javascript\">");
+                    out.println("location='activaCuentaCliente.jsp';");
+                    out.println("</script>");*/
+
+                    request.setAttribute("rs", 1);
+                    request.getRequestDispatcher("activaCuentaCliente.jsp").forward(request, response);
+                    map.remove(destinatario);
+                    usu.setMailUser(destinatario);
+                    usu.setPasswordUser(pass1ClienteRegistro);
+                    addUser.agregarUsuario(usu);
                     //Borrar dato del diccionario cuando entra al if
+                    //Tengo un problema, ya que si dos usuarios mandan la solicitud, habrá 
+                    //Un cruce de datos, por los request.getParamenter
+                    //Presione la tecla de atras y me salió el modal ver ese tema tmb
+                    //Si podemos hacer que al volver te mande al index o q ya no se mande el modal
                     break;
                 } else {
-                    out.println("<script type=\"text/javascript\">");
+                    request.setAttribute("rs", 2);
+                    request.getRequestDispatcher("activaCuentaCliente.jsp").forward(request, response);
+                    /*out.println("<script type=\"text/javascript\">");
                     out.println("location='activaCuentaCliente.jsp';");
-                    out.println("</script>");
+                    out.println("</script>");*/
                 }
             }
         } else {
