@@ -17,8 +17,8 @@ public class Menu extends Perfil {
     private String classMenu;
     private String targetMenu;
 
-    public Menu(int idMenu, String desMenu, String rutaMenu, String classMenu, String targetMenu, int idPerfil, String desPerfil, int perfilEstado, int pError, String pMsg_error) {
-        super(idPerfil, desPerfil, perfilEstado, pError, pMsg_error);
+    public Menu(int idMenu, String desMenu, String rutaMenu, String classMenu, String targetMenu, int idPerfil, String desPerfil, int perfilEstado, String perfilEstadoDes, int pError, int contadorRoles, String pMsg_error) {
+        super(idPerfil, desPerfil, perfilEstado, perfilEstadoDes, pError, contadorRoles, pMsg_error);
         this.idMenu = idMenu;
         this.desMenu = desMenu;
         this.rutaMenu = rutaMenu;

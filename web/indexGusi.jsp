@@ -53,7 +53,7 @@
                     <li><a href="#team" class="page-scroll">Protocolo</a></li>
                     <!--<li><a href="ControladorVistas?menu=vistas&&accion=listarproducto" onclick="Buscar()" target="myFrame" class="page-scroll">Menu</a></li>-->
                     <li><a href="#call-reservation" class="page-scroll">Ordena</a></li>
-                    <li><a href="carrito.jsp" class="page-scroll" target="_blank">Menu</a></li>
+                    <li><a href="controladorVistasCliente?menu=vistasCliente&&accion=listar" class="page-scroll" target="_blank">Menu</a></li>
                     <li><a href="login.jsp" >Login</a></li>
                 </ul>
             </div>
@@ -100,8 +100,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
 
     <!-- Call Reservation Section -->
     <div id="call-reservation" class="text-center">

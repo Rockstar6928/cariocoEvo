@@ -16,15 +16,7 @@
         <link rel="icon" type="image/x-icon" href="img/carioco.jpeg">
     </head>
     <body>
-        <%
-            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-            response.setHeader("Pragma", "no-cache");
-            response.setHeader("Expires", "0");
-
-            if (session.getAttribute("username") == null) {
-                response.sendRedirect("login.jsp");
-            }
-        %>
+     
         <!--Cabecera de la página-->
         <header>
             <div id="logotipo">
@@ -46,7 +38,7 @@
                     <a href="#">Usuario: ${datosUsuario.getMailUser()}</a>
                 </li>
                 <li>
-                    <a href="#">Cerrar sesión</a>
+                    <a href="controladorValidar?accion=cerrar">Cerrar sesión</a>
                 </li>
             </ul>
 
@@ -194,7 +186,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <input type="file"  name="imgpro" class="form-control" id="img-pro" aria-describedby="emailHelp" required="required" placeholder="Img">
+                                <input type="file"  name="imgpro" class="form-control" id="img-pro" aria-describedby="emailHelp" placeholder="Img">
                             </div>
 
                             <div class="mb-3">
@@ -218,6 +210,8 @@
 
             window.addEventListener('load', function () {
                 var openit =<%=request.getAttribute("openit")%>;
+                var openit2 =<%=request.getAttribute("openit2")%>;
+
                 var cid = <%=request.getAttribute("catbu")%>;
                 $.ajax({
                     url: "ControladorProducto?menu=producto&&accion=LCats",
@@ -234,7 +228,6 @@
                                 option.selected = true;
                             }
                         })
-
                     }
                 });
 
@@ -242,6 +235,13 @@
                     var divAlert = document.getElementById("msg-alert");
                     divAlert.classList.remove("d-none");
                     abrirAddPro();
+                }
+
+                if (openit2 !== null) {
+                    var divAlert2 = document.getElementById("msg-alert2");
+                    divAlert2.classList.remove("d-none");
+                    $('#myModalEdit').modal({backdrop: 'static', keyboard: false})
+                    $("#myModalEdit").modal('show');
                 }
 
             });

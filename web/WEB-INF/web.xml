@@ -16,6 +16,14 @@
         <servlet-name>ControladorProducto</servlet-name>
         <servlet-class>Controlador.ControladorProducto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorPerfil</servlet-name>
+        <servlet-class>Controlador.ControladorPerfil</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>controladorVistasCliente</servlet-name>
+        <servlet-class>Controlador.controladorVistasCliente</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controladorValidar</servlet-name>
         <url-pattern>/controladorValidar</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>ControladorProducto</servlet-name>
         <url-pattern>/ControladorProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorPerfil</servlet-name>
+        <url-pattern>/ControladorPerfil</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorVistasCliente</servlet-name>
+        <url-pattern>/controladorVistasCliente</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

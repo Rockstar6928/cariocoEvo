@@ -1,5 +1,17 @@
-class Carrito {
 
+class Carrito {
+    
+    carritoCompras (){
+        
+        const counter = document.getElementById("contadorCarrito");
+        const listProd = this.obtenerProductosLocalStorage()
+        if(listProd.length > 0){
+            counter.setAttribute("data-count", listProd.length)
+        }else{
+            counter.setAttribute("data-count", 0)
+            
+        }
+    }
     //Añadir producto al carrito
     comprarProducto(e){
         e.preventDefault();
@@ -8,9 +20,10 @@ class Carrito {
             const producto = e.target.parentElement.parentElement;
             //Enviamos el producto seleccionado para tomar sus datos
             this.leerDatosProducto(producto);
+            this.carritoCompras()
+             
         }
     }
-
     //Leer datos del producto
     leerDatosProducto(producto){
         const infoProducto = {
@@ -18,13 +31,14 @@ class Carrito {
             titulo: producto.querySelector('h4').textContent,
             precio: producto.querySelector('.precio span').textContent,
             id: producto.querySelector('a').getAttribute('data-id'),
-            cantidad: 1
+            cantidad: 1     
         }
         let productosLS;
         productosLS = this.obtenerProductosLocalStorage();
         productosLS.forEach(function (productoLS){
             if(productoLS.id === infoProducto.id){
                 productosLS = productoLS.id;
+                
             }
         });
 
@@ -34,13 +48,14 @@ class Carrito {
                 title: 'Oops...',
                 text: 'El producto ya está agregado',
                 showConfirmButton: false,
-                timer: 1000
+                timer: 2000
             })
         }
         else {
             this.insertarCarrito(infoProducto);
+            
+       
         }
-        
     }
 
     //muestra producto seleccionado en carrito
@@ -51,13 +66,14 @@ class Carrito {
                 <img src="${producto.imagen}" width=100>
             </td>
             <td>${producto.titulo}</td>
-            <td>${producto.precio}</td>
+            <td>S/. ${producto.precio}</td>
             <td>
                 <a href="#" class="borrar-producto fas fa-times-circle" data-id="${producto.id}"></a>
             </td>
         `;
         listaProductos.appendChild(row);
         this.guardarProductosLocalStorage(producto);
+        
 
     }
 
@@ -69,20 +85,24 @@ class Carrito {
             e.target.parentElement.parentElement.remove();
             producto = e.target.parentElement.parentElement;
             productoID = producto.querySelector('a').getAttribute('data-id');
+            
         }
+        
         this.eliminarProductoLocalStorage(productoID);
         this.calcularTotal();
-
+        this.carritoCompras
     }
+    
 
     //Elimina todos los productos
     vaciarCarrito(e){
         e.preventDefault();
         while(listaProductos.firstChild){
             listaProductos.removeChild(listaProductos.firstChild);
-        }
+        } 
+        
         this.vaciarLocalStorage();
-
+        this.carritoCompras()
         return false;
     }
 
@@ -123,7 +143,7 @@ class Carrito {
                     <img src="${producto.imagen}" width=100>
                 </td>
                 <td>${producto.titulo}</td>
-                <td>${producto.precio}</td>
+                <td>S/. ${producto.precio}</td>
                 <td>
                     <a href="#" class="borrar-producto fas fa-times-circle" data-id="${producto.id}"></a>
                 </td>
@@ -143,11 +163,11 @@ class Carrito {
                     <img src="${producto.imagen}" width=100>
                 </td>
                 <td>${producto.titulo}</td>
-                <td>${producto.precio}</td>
+                <td>S/. ${producto.precio}</td>
                 <td>
                     <input type="number" class="form-control cantidad" min="1" value=${producto.cantidad}>
                 </td>
-                <td id='subtotales'>${producto.precio * producto.cantidad}</td>
+                <td id='subtotales'>S/. ${producto.precio * producto.cantidad}</td>
                 <td>
                     <a href="#" class="borrar-producto fas fa-times-circle" style="font-size:30px" data-id="${producto.id}"></a>
                 </td>
@@ -176,6 +196,7 @@ class Carrito {
     vaciarLocalStorage(){
         localStorage.clear();
     }
+   
 
     //Procesar pedido
     procesarPedido(e){

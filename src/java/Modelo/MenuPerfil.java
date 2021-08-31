@@ -14,8 +14,8 @@ public class MenuPerfil extends Menu {
     private String xmlDAO;
     private int validandoMenu;
 
-    public MenuPerfil(String xmlDAO, int validandoMenu, int idMenu, String desMenu, String rutaMenu, String classMenu, String targetMenu, int idPerfil, String desPerfil, int perfilEstado, int pError, String pMsg_error) {
-        super(idMenu, desMenu, rutaMenu, classMenu, targetMenu, idPerfil, desPerfil, perfilEstado, pError, pMsg_error);
+    public MenuPerfil(String xmlDAO, int validandoMenu, int idMenu, String desMenu, String rutaMenu, String classMenu, String targetMenu, int idPerfil, String desPerfil, int perfilEstado, String perfilEstadoDes, int pError, int contadorRoles, String pMsg_error) {
+        super(idMenu, desMenu, rutaMenu, classMenu, targetMenu, idPerfil, desPerfil, perfilEstado, perfilEstadoDes, pError, contadorRoles, pMsg_error);
         this.xmlDAO = xmlDAO;
         this.validandoMenu = validandoMenu;
     }

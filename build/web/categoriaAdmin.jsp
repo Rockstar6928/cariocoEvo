@@ -17,15 +17,7 @@
         <link rel="icon" type="image/x-icon" href="img/carioco.jpeg">
     </head>
     <body>
-        <%
-            response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
-            response.setHeader("Pragma", "no-cache");
-            response.setHeader("Expires", "0");
-
-            if (session.getAttribute("username") == null) {
-                response.sendRedirect("login.jsp");
-            }
-        %>
+        
         <!--Cabecera de la página-->
         <header>
             <div id="logotipo">
@@ -48,7 +40,7 @@
                     <a href="#">Usuario: ${datosUsuario.getMailUser()}</a>
                 </li>
                 <li>
-                    <a href="#">Cerrar sesión</a>
+                    <a href="controladorValidar?accion=cerrar">Cerrar sesión</a>
                 </li>
             </ul>
 

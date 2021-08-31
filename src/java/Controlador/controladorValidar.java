@@ -58,6 +58,7 @@ public class controladorValidar extends HttpServlet {
     revisarDatosRegistro checkData = new revisarDatosRegistro();
     ValidarMenuDAO valMenuDao = new ValidarMenuDAO();
     Map<String, Integer> map = new HashMap<>();
+    Map<String, Cliente> map1 = new HashMap<>();
     String destinatario = "";
 
     agregarUsuarioActivarCuenta addUser = new agregarUsuarioActivarCuenta();
@@ -127,7 +128,7 @@ public class controladorValidar extends HttpServlet {
                 request.getRequestDispatcher("vistaPrincipalAdministrativa.jsp").forward(request, response);
             } else if (usu.getpError() == 0 && usu.getUsuEstado() == 1 && usu.getIdPerfil() == 2) {
                 sesion1.setAttribute("username", email);
-                request.getRequestDispatcher("vistaPrincipalCliente.jsp").forward(request, response);
+                request.getRequestDispatcher("controladorVistasCliente?menu=vistasCliente&&accion=listar").forward(request, response);
             } else {
                 request.setAttribute("openit", 1);
                 request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -147,12 +148,19 @@ public class controladorValidar extends HttpServlet {
                 request.getRequestDispatcher("registroCliente.jsp").forward(request, response);
             } else {
                 //Una vez pasen ese filtro terminamos de pedir estos datos
+
                 nombreClienteRegistro = request.getParameter("nombreClienteRegistro");
                 direccionClienteRegistro = request.getParameter("direccionClienteRegistro");
                 apellidosClienteRegistro = request.getParameter("apellidosClienteRegistro");
                 celularClienteRegistro = request.getParameter("celularClienteRegistro");
                 fechaNacimientoClienteRegistro = request.getParameter("fechaNacimientoClienteRegistro");
                 pass1ClienteRegistro = request.getParameter("pass1ClienteRegistro");
+
+                //Seteando contraseña para el dic
+                cli.setMailUser(emailClienteRegistro);
+                cli.setPasswordUser(pass1ClienteRegistro);
+                //Empujo cliente a mapa email y pass
+                map1.put(cli.getMailUser(), cli);
 
                 //Enviar Correos
                 Properties propiedad = new Properties();
@@ -163,7 +171,8 @@ public class controladorValidar extends HttpServlet {
                 Session sesion = Session.getDefaultInstance(propiedad);
                 String correoEnvia = "infopolleriacarioco@gmail.com";
                 String contrasena = "evo20212gato";
-                destinatario = request.getParameter("emailClienteRegistro");
+                destinatario = emailClienteRegistro;
+
                 String asunto = "Activa tu cuenta: código de confirmación";
                 String mensaje;
                 int i = 0, cant = 5, rango = 10;
@@ -213,9 +222,11 @@ public class controladorValidar extends HttpServlet {
 
                     //Agregamos diccionario para separar los codigos, 
                     //ya que podemos recibir decenas de peticiones para crearnos una cuenta
-                    map.put(destinatario, Integer.parseInt(nro));
+                    //Empujando el correo y el codigo
+                    map.put(cli.getMailUser(), Integer.parseInt(nro));
 
                     //Lo direcciono para que digite el código
+                    request.setAttribute("correoCli", destinatario);
                     request.getRequestDispatcher("activaCuentaCliente.jsp").forward(request, response);
                     System.out.println("Correo enviado correctamente | Destino: " + destinatario);
                 } catch (Exception e) {
@@ -227,32 +238,38 @@ public class controladorValidar extends HttpServlet {
         } else if (op.equals("Activar")) {
             //Ver lo del diccionario correo:codigo
             String codigo = request.getParameter("codigoActiva");
-            for (Map.Entry<String, Integer> entry : map.entrySet()) {
-                if (map.containsKey(destinatario) && map.containsValue(Integer.parseInt(codigo))) {
-                    /*out.println("<script type=\"text/javascript\">");
-                    out.println("location='activaCuentaCliente.jsp';");
-                    out.println("</script>");*/
-
-                    request.setAttribute("rs", 1);
-                    request.getRequestDispatcher("activaCuentaCliente.jsp").forward(request, response);
-                    map.remove(destinatario);
-                    usu.setMailUser(destinatario);
-                    usu.setPasswordUser(pass1ClienteRegistro);
-                    addUser.agregarUsuario(usu);
-                    //Borrar dato del diccionario cuando entra al if
-                    //Tengo un problema, ya que si dos usuarios mandan la solicitud, habrá 
-                    //Un cruce de datos, por los request.getParamenter
-                    //Presione la tecla de atras y me salió el modal ver ese tema tmb
-                    //Si podemos hacer que al volver te mande al index o q ya no se mande el modal
-                    break;
-                } else {
-                    request.setAttribute("rs", 2);
-                    request.getRequestDispatcher("activaCuentaCliente.jsp").forward(request, response);
-                    /*out.println("<script type=\"text/javascript\">");
-                    out.println("location='activaCuentaCliente.jsp';");
-                    out.println("</script>");*/
+            String mailhide = request.getParameter("mailhide");
+            String contrasena = "";
+            for (Map.Entry<String, Cliente> entry : map1.entrySet()) {
+                if (entry.getKey().equals(mailhide)) {
+                    contrasena = entry.getValue().getPasswordUser();
+                    for (Map.Entry<String, Integer> entry2 : map.entrySet()) {
+                        if (entry2.getKey().equals(mailhide)) {
+                            if (entry2.getValue().equals(Integer.parseInt(codigo))) {
+                                
+                                usu.setMailUser(mailhide);
+                                
+                                usu.setPasswordUser(contrasena);
+                                
+                                
+                                
+                                addUser.agregarUsuario(usu);
+                                request.setAttribute("rs", 1);
+                                request.getRequestDispatcher("activaCuentaCliente.jsp").forward(request, response);
+                                map.remove(mailhide);
+                                map1.remove(mailhide);
+                                break;
+                            } else {
+                                request.setAttribute("rs", 2);
+                                request.getRequestDispatcher("activaCuentaCliente.jsp").forward(request, response);
+                            }
+                        }
+                    }
                 }
+
             }
+            
+            
         } else {
             request.getRequestDispatcher("indexGusi.jsp").forward(request, response);
         }

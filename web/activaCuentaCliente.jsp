@@ -34,6 +34,7 @@
                         <input type="text" name="codigoActiva" class="form-control mb-3" id="codigo-activa" aria-describedby="emailHelp" required="required" onkeypress="if (isNaN(String.fromCharCode(event.keyCode)))
                                     return false;" maxlength="5" >
                         <div id="emailHelp" class="form-text text-center">El código esta en tu bandeja de entrada, ve a por el!</div>
+                        <input class="d-none" value="${correoCli}" name="mailhide">
                     </div>
                     <input type="submit" id="btn-activa" class="btn justify-content-center" name="accion" value="Activar">
                 </div>

@@ -7,6 +7,7 @@ package Controlador;
 
 import Modelo.Categoria;
 import Modelo.Producto;
+import ModeloDAO.actualizarProducto;
 import ModeloDAO.agregarProducto;
 import ModeloDAO.buscarProductoAdmin;
 import ModeloDAO.categoriaListarAdmin;
@@ -39,6 +40,7 @@ public class ControladorProducto extends HttpServlet {
     eliminarProducto delPro = new eliminarProducto();
     agregarProducto addPro = new agregarProducto();
     productoListarById proById = new productoListarById();
+    actualizarProducto updatePro = new actualizarProducto();
     Producto pro = new Producto();
     int idEditar = 0;
 
@@ -128,6 +130,33 @@ public class ControladorProducto extends HttpServlet {
                     response.getWriter().write(countryList2);
                     break;
 
+                case "Editar":
+                    int listCats3 = Integer.parseInt(request.getParameter("listCats3"));
+                    String nombrepro2 = request.getParameter("nombrepro");
+                    String despro2 = request.getParameter("despro");
+                    Double preciopro2 = Double.parseDouble(request.getParameter("preciopro"));
+                    String imgpro2 = request.getParameter("imgpro");
+                    String imgproprevious = request.getParameter("imgproprevious");
+                    pro.setIdCat(listCats3);
+                    pro.setNomPro(nombrepro2);
+                    pro.setDescPro(despro2);
+                    pro.setPrecioPro(preciopro2);
+                    if (imgpro2.equals("")) {
+                        pro.setImgPro(imgproprevious);
+                    } else {
+                        pro.setImgPro(imgpro2);
+                    }
+                    updatePro.editarThing(pro);
+                    if (pro.getpError() == 101) {
+                        request.setAttribute("iderror", pro.getpError());
+                        request.setAttribute("msgerror", pro.getpMsg_error());
+                        request.setAttribute("openit2", 1);
+                        request.getRequestDispatcher("ControladorProducto?menu=producto&&accion=listar").forward(request, response);
+                    } else {
+                        updatePro.editarThing(pro);
+                        request.getRequestDispatcher("ControladorProducto?menu=producto&&accion=listar").forward(request, response);
+                    }
+                    break;
                 default:
                     throw new AssertionError();
             }

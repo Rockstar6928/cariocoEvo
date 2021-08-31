@@ -8,7 +8,9 @@ const procesarPedidoBtn = document.getElementById('procesar-pedido');
 cargarEventos();
 
 function cargarEventos(){
-
+  
+    
+    carro.carritoCompras();
     //Se ejecuta cuando se presionar agregar carrito
     productos.addEventListener('click', (e)=>{carro.comprarProducto(e)});
 
@@ -24,3 +26,4 @@ function cargarEventos(){
     //Enviar pedido a otra pagina
     procesarPedidoBtn.addEventListener('click', (e)=>{carro.procesarPedido(e)});
 }
+

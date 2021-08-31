@@ -14,16 +14,22 @@ public class Perfil {
     private int idPerfil;
     private String desPerfil;
     private int perfilEstado;
+    private String perfilEstadoDes;
     private int pError;
+    private int contadorRoles;
     private String pMsg_error;
 
-    public Perfil(int idPerfil, String desPerfil, int perfilEstado, int pError, String pMsg_error) {
+    public Perfil(int idPerfil, String desPerfil, int perfilEstado, String perfilEstadoDes, int pError, int contadorRoles, String pMsg_error) {
         this.idPerfil = idPerfil;
         this.desPerfil = desPerfil;
         this.perfilEstado = perfilEstado;
+        this.perfilEstadoDes = perfilEstadoDes;
         this.pError = pError;
+        this.contadorRoles = contadorRoles;
         this.pMsg_error = pMsg_error;
     }
+
+    
 
     public Perfil() {
     }
@@ -68,4 +74,21 @@ public class Perfil {
         this.pMsg_error = pMsg_error;
     }
 
+    public String getPerfilEstadoDes() {
+        return perfilEstadoDes;
+    }
+
+    public void setPerfilEstadoDes(String perfilEstadoDes) {
+        this.perfilEstadoDes = perfilEstadoDes;
+    }
+
+    public int getContadorRoles() {
+        return contadorRoles;
+    }
+
+    public void setContadorRoles(int contadorRoles) {
+        this.contadorRoles = contadorRoles;
+    }
+
+    
 }
