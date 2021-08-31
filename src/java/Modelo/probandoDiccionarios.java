@@ -40,44 +40,38 @@ public class probandoDiccionarios {
     }
 
     Usuario usu = new Usuario();
+    Map<String, Usuario> map1 = new HashMap<>();//This is one instance of the  map you want to store in the above list.
 
     public void devuelveDatojeje() {
-        //List<Map<String,List<String>>> list = new ArrayList<Map<String,List<String>>>();//This is the final list you need
-        List<Map<String, Usuario>> list = new ArrayList<>();
-
-        Map<String, Usuario> map1 = new HashMap<>();//This is one instance of the  map you want to store in the above list.
-
+        usu = new Usuario();
         usu.setMailUser("correo@prueba.com");
         usu.setPasswordUser("123456");
-
         map1.put(usu.getMailUser(), usu);
-        list.add(map1);
-
         for (Map.Entry<String, Usuario> entry : map1.entrySet()) {
             if (entry.getKey().equals("correo@prueba.com")) {
-                System.out.println(entry.getValue().getPasswordUser());
+                System.out.println("K1: " + entry.getKey() + " | " + "V1: " + entry.getValue().getPasswordUser());
             }
         }
+        //System.out.println(map1);
+    }
 
-        
-        
-//        for (int i = 0; i < arraylist1.size(); i++) {
-//            System.out.println("Mail: " + arraylist1.get(i).getMailUser() + " | " + "Pass: " + arraylist1.get(i).getPasswordUser());
-//        }
-//        for (Map.Entry<String, List<Usuario>> entry : map1.entrySet()) {
-//            //System.out.println("K: "+entry.getKey()+" "+"V: "+entry.getValue().toString());
-//            System.out.println("K: " + entry.getKey());
-//            for (int i = 0; i < arraylist1.size(); i++) {
-//                System.out.println("Mail: " + arraylist1.get(i).getMailUser() + " | " + "Pass: " + arraylist1.get(i).getPasswordUser());
-//            }
-//        }
-//        System.out.println(list);
-        //myMaps.put("corre1@prueba.com", new ArrayList<Usuario>(Arrays.as));
+    public void devuelveDatojeje2() {
+        usu = new Usuario();
+        usu.setMailUser("correo2@prueba2.com");
+        usu.setPasswordUser("123456789");
+        map1.put(usu.getMailUser(), usu);
+        for (Map.Entry<String, Usuario> entry : map1.entrySet()) {
+            if (entry.getKey().equals("correo2@prueba2.com")) {
+                System.out.println("K2: " + entry.getKey() + " | " + "V2: " + entry.getValue().getPasswordUser());
+            }
+        }
+        //System.out.println(map1);
     }
 
     public static void main(String[] args) {
         probandoDiccionarios pd = new probandoDiccionarios();
         pd.devuelveDatojeje();
+        pd.devuelveDatojeje2();
         //pd.devuelvemeDato();
     }
 }

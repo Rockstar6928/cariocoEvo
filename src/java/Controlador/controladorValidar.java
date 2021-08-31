@@ -136,6 +136,7 @@ public class controladorValidar extends HttpServlet {
         } else if (op.equals("Registrar")) {
             //Primero vamos a revisar estos datos para ver si 
             //ya existen en la base de datos 
+            cli = new Cliente();
             String emailClienteRegistro = request.getParameter("emailClienteRegistro");
             String dniClienteRegistro = request.getParameter("dniClienteRegistro");
             cli.setMailUser(emailClienteRegistro);
@@ -148,7 +149,7 @@ public class controladorValidar extends HttpServlet {
                 request.getRequestDispatcher("registroCliente.jsp").forward(request, response);
             } else {
                 //Una vez pasen ese filtro terminamos de pedir estos datos
-
+                
                 nombreClienteRegistro = request.getParameter("nombreClienteRegistro");
                 direccionClienteRegistro = request.getParameter("direccionClienteRegistro");
                 apellidosClienteRegistro = request.getParameter("apellidosClienteRegistro");
@@ -246,13 +247,8 @@ public class controladorValidar extends HttpServlet {
                     for (Map.Entry<String, Integer> entry2 : map.entrySet()) {
                         if (entry2.getKey().equals(mailhide)) {
                             if (entry2.getValue().equals(Integer.parseInt(codigo))) {
-                                
                                 usu.setMailUser(mailhide);
-                                
                                 usu.setPasswordUser(contrasena);
-                                
-                                
-                                
                                 addUser.agregarUsuario(usu);
                                 request.setAttribute("rs", 1);
                                 request.getRequestDispatcher("activaCuentaCliente.jsp").forward(request, response);
@@ -268,8 +264,7 @@ public class controladorValidar extends HttpServlet {
                 }
 
             }
-            
-            
+
         } else {
             request.getRequestDispatcher("indexGusi.jsp").forward(request, response);
         }
