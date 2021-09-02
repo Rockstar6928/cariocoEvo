@@ -13,21 +13,29 @@ public class Usuario {
 
     private int idUser;
     private int idPerfil;
+    private String idPerfilString;
     private String mailUser;
     private String passwordUser;
     private int usuEstado;
+    private String usuEstadoString;
     private int pError;
     private String pMsg_error;
 
-    public Usuario(int idUser, int idPerfil, String mailUser, String passwordUser, int usuEstado, int pError, String pMsg_error) {
+    public Usuario(int idUser, int idPerfil, String idPerfilString, String mailUser, String passwordUser, int usuEstado, String usuEstadoString, int pError, String pMsg_error) {
         this.idUser = idUser;
         this.idPerfil = idPerfil;
+        this.idPerfilString = idPerfilString;
         this.mailUser = mailUser;
         this.passwordUser = passwordUser;
         this.usuEstado = usuEstado;
+        this.usuEstadoString = usuEstadoString;
         this.pError = pError;
         this.pMsg_error = pMsg_error;
     }
+
+  
+
+    
 
     public Usuario() {
     }
@@ -86,6 +94,22 @@ public class Usuario {
 
     public void setpMsg_error(String pMsg_error) {
         this.pMsg_error = pMsg_error;
+    }
+
+    public String getIdPerfilString() {
+        return idPerfilString;
+    }
+
+    public void setIdPerfilString(String idPerfilString) {
+        this.idPerfilString = idPerfilString;
+    }
+
+    public String getUsuEstadoString() {
+        return usuEstadoString;
+    }
+
+    public void setUsuEstadoString(String usuEstadoString) {
+        this.usuEstadoString = usuEstadoString;
     }
 
 }

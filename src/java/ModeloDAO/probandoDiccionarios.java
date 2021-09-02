@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package ModeloDAO;
 
+import Modelo.Usuario;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

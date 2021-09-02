@@ -123,7 +123,7 @@ public class controladorValidar extends HttpServlet {
             //Validando errores
             request.setAttribute("iderror", usu.getpError());
             request.setAttribute("msgerror", usu.getpMsg_error());
-            if (usu.getpError() == 0 && usu.getUsuEstado() == 1 && usu.getIdPerfil() == 1) {
+            if (usu.getpError() == 0 && usu.getUsuEstado() == 1) {
                 sesion1.setAttribute("username", email);
                 request.getRequestDispatcher("vistaPrincipalAdministrativa.jsp").forward(request, response);
             } else if (usu.getpError() == 0 && usu.getUsuEstado() == 1 && usu.getIdPerfil() == 2) {

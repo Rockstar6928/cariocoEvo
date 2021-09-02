@@ -1,0 +1,513 @@
+@startuml
+annotation java.lang.Override
+class Config.ConexionMySQL
+class Controlador.ControladorCategoria
+class Controlador.ControladorCliente
+class Controlador.ControladorPerfil
+class Controlador.ControladorProducto
+class Controlador.ControladorTrabajador
+class Controlador.controladorValidar
+class Controlador.controladorVistasCliente
+class Modelo.Categoria
+class Modelo.Cliente
+class Modelo.Empleado
+class Modelo.Md5
+class Modelo.Menu
+class Modelo.MenuPerfil
+class Modelo.Pedido
+class Modelo.Perfil
+class Modelo.Producto
+class Modelo.Usuario
+class ModeloDAO.ListaProductosGeneralById
+class ModeloDAO.ObtenerUsuarioMaximo
+class ModeloDAO.PerfilAsignarMenuDAO
+class ModeloDAO.PerfilEditarDAO
+class ModeloDAO.ValidarMenuDAO
+class ModeloDAO.ValidarUsuario
+class ModeloDAO.actualizarPerfil
+class ModeloDAO.actualizarProducto
+class ModeloDAO.agregarCategoria
+class ModeloDAO.agregarClienteActivar
+class ModeloDAO.agregarPerfil
+class ModeloDAO.agregarProducto
+class ModeloDAO.agregarUsuarioActivarCuenta
+class ModeloDAO.buscarCategoria
+class ModeloDAO.buscarProductoAdmin
+class ModeloDAO.categoriaListarAdmin
+class ModeloDAO.deshabilitarPerfil
+class ModeloDAO.editarCategoria
+class ModeloDAO.eliminarCategoria
+class ModeloDAO.eliminarProducto
+class ModeloDAO.filtrarPerfil
+class ModeloDAO.habilitarPerfil
+class ModeloDAO.listarCategoriaPorID
+class ModeloDAO.listarMenu
+class ModeloDAO.listarPerfilId
+class ModeloDAO.listarUsuariosRoles
+class ModeloDAO.mostrarCategoria
+class ModeloDAO.mostrarProducto
+class ModeloDAO.ocultarCategoria
+class ModeloDAO.ocultarProducto
+class ModeloDAO.perfilEliminar
+class ModeloDAO.probandoDiccionarios
+class ModeloDAO.productoListarById
+class ModeloDAO.productosListarAdmin
+class ModeloDAO.revisarDatosRegistro
+class com.google.gson.Gson
+class java.io.IOException
+class java.io.PrintWriter
+class java.security.MessageDigest
+class java.sql.CallableStatement
+class java.sql.Connection
+class java.sql.DriverManager
+class java.sql.ResultSet
+class java.sql.Types
+class java.util.ArrayList
+class java.util.Arrays
+class java.util.HashMap
+class java.util.List
+class java.util.Map
+class java.util.Properties
+class javax.activation.DataHandler
+class javax.activation.FileDataSource
+class javax.crypto.Cipher
+class javax.crypto.SecretKey
+class javax.crypto.spec.SecretKeySpec
+class javax.mail.BodyPart
+class javax.mail.Message
+class javax.mail.Session
+class javax.mail.Transport
+class javax.mail.internet.InternetAddress
+class javax.mail.internet.MimeBodyPart
+class javax.mail.internet.MimeMessage
+class javax.mail.internet.MimeMultipart
+class javax.servlet.ServletException
+class javax.servlet.http.HttpServlet
+class javax.servlet.http.HttpServletRequest
+class javax.servlet.http.HttpServletResponse
+class javax.servlet.http.HttpSession
+class org.apache.commons.codec.binary.Base64
+interface Interfaces.IAgregarCliente
+interface Interfaces.IAgregarGeneral
+interface Interfaces.IAgregarUsuario
+interface Interfaces.IBuscar
+interface Interfaces.ICambiarEstado
+interface Interfaces.IConexion
+interface Interfaces.IEditarGeneral
+interface Interfaces.IListar
+interface Interfaces.IListarById
+interface Interfaces.IObtenerMaxId
+interface Interfaces.IValidarDatosRegistro
+interface Interfaces.IValidarMenu
+interface Interfaces.IValidarUsuario
+Config.ConexionMySQL ..> java.lang.Override
+Config.ConexionMySQL ..> java.sql.Connection
+Config.ConexionMySQL ..> java.sql.DriverManager
+Config.ConexionMySQL --|> Interfaces.IConexion
+Controlador.ControladorCategoria ..> java.lang.Override
+Controlador.ControladorCategoria ..> Modelo.Categoria
+Controlador.ControladorCategoria ..> ModeloDAO.agregarCategoria
+Controlador.ControladorCategoria ..> ModeloDAO.buscarCategoria
+Controlador.ControladorCategoria ..> ModeloDAO.categoriaListarAdmin
+Controlador.ControladorCategoria ..> ModeloDAO.editarCategoria
+Controlador.ControladorCategoria ..> ModeloDAO.eliminarCategoria
+Controlador.ControladorCategoria ..> ModeloDAO.listarCategoriaPorID
+Controlador.ControladorCategoria ..> ModeloDAO.mostrarCategoria
+Controlador.ControladorCategoria ..> ModeloDAO.ocultarCategoria
+Controlador.ControladorCategoria ..> com.google.gson.Gson
+Controlador.ControladorCategoria ..> java.io.IOException
+Controlador.ControladorCategoria ..> java.io.PrintWriter
+Controlador.ControladorCategoria ..> java.util.ArrayList
+Controlador.ControladorCategoria ..> java.util.List
+Controlador.ControladorCategoria ..> javax.servlet.ServletException
+Controlador.ControladorCategoria --|> javax.servlet.http.HttpServlet
+Controlador.ControladorCategoria ..> javax.servlet.http.HttpServletRequest
+Controlador.ControladorCategoria ..> javax.servlet.http.HttpServletResponse
+Controlador.ControladorCliente ..> java.lang.Override
+Controlador.ControladorCliente ..> java.io.IOException
+Controlador.ControladorCliente ..> java.io.PrintWriter
+Controlador.ControladorCliente ..> javax.servlet.ServletException
+Controlador.ControladorCliente --|> javax.servlet.http.HttpServlet
+Controlador.ControladorCliente ..> javax.servlet.http.HttpServletRequest
+Controlador.ControladorCliente ..> javax.servlet.http.HttpServletResponse
+Controlador.ControladorPerfil ..> java.lang.Override
+Controlador.ControladorPerfil ..> Modelo.Menu
+Controlador.ControladorPerfil ..> Modelo.MenuPerfil
+Controlador.ControladorPerfil ..> Modelo.Perfil
+Controlador.ControladorPerfil ..> ModeloDAO.PerfilAsignarMenuDAO
+Controlador.ControladorPerfil ..> ModeloDAO.PerfilEditarDAO
+Controlador.ControladorPerfil ..> ModeloDAO.actualizarPerfil
+Controlador.ControladorPerfil ..> ModeloDAO.agregarPerfil
+Controlador.ControladorPerfil ..> ModeloDAO.deshabilitarPerfil
+Controlador.ControladorPerfil ..> ModeloDAO.filtrarPerfil
+Controlador.ControladorPerfil ..> ModeloDAO.habilitarPerfil
+Controlador.ControladorPerfil ..> ModeloDAO.listarMenu
+Controlador.ControladorPerfil ..> ModeloDAO.listarPerfilId
+Controlador.ControladorPerfil ..> ModeloDAO.listarUsuariosRoles
+Controlador.ControladorPerfil ..> ModeloDAO.perfilEliminar
+Controlador.ControladorPerfil ..> com.google.gson.Gson
+Controlador.ControladorPerfil ..> java.io.IOException
+Controlador.ControladorPerfil ..> java.io.PrintWriter
+Controlador.ControladorPerfil ..> java.util.ArrayList
+Controlador.ControladorPerfil ..> java.util.List
+Controlador.ControladorPerfil ..> javax.servlet.ServletException
+Controlador.ControladorPerfil --|> javax.servlet.http.HttpServlet
+Controlador.ControladorPerfil ..> javax.servlet.http.HttpServletRequest
+Controlador.ControladorPerfil ..> javax.servlet.http.HttpServletResponse
+Controlador.ControladorProducto ..> java.lang.Override
+Controlador.ControladorProducto ..> Modelo.Categoria
+Controlador.ControladorProducto ..> Modelo.Producto
+Controlador.ControladorProducto ..> ModeloDAO.actualizarProducto
+Controlador.ControladorProducto ..> ModeloDAO.agregarProducto
+Controlador.ControladorProducto ..> ModeloDAO.buscarProductoAdmin
+Controlador.ControladorProducto ..> ModeloDAO.categoriaListarAdmin
+Controlador.ControladorProducto ..> ModeloDAO.eliminarProducto
+Controlador.ControladorProducto ..> ModeloDAO.mostrarProducto
+Controlador.ControladorProducto ..> ModeloDAO.ocultarProducto
+Controlador.ControladorProducto ..> ModeloDAO.productoListarById
+Controlador.ControladorProducto ..> ModeloDAO.productosListarAdmin
+Controlador.ControladorProducto ..> com.google.gson.Gson
+Controlador.ControladorProducto ..> java.io.IOException
+Controlador.ControladorProducto ..> java.io.PrintWriter
+Controlador.ControladorProducto ..> java.util.ArrayList
+Controlador.ControladorProducto ..> java.util.List
+Controlador.ControladorProducto ..> javax.servlet.ServletException
+Controlador.ControladorProducto --|> javax.servlet.http.HttpServlet
+Controlador.ControladorProducto ..> javax.servlet.http.HttpServletRequest
+Controlador.ControladorProducto ..> javax.servlet.http.HttpServletResponse
+Controlador.ControladorTrabajador ..> java.lang.Override
+Controlador.ControladorTrabajador ..> java.io.IOException
+Controlador.ControladorTrabajador ..> java.io.PrintWriter
+Controlador.ControladorTrabajador ..> javax.servlet.ServletException
+Controlador.ControladorTrabajador --|> javax.servlet.http.HttpServlet
+Controlador.ControladorTrabajador ..> javax.servlet.http.HttpServletRequest
+Controlador.ControladorTrabajador ..> javax.servlet.http.HttpServletResponse
+Controlador.controladorValidar ..> java.lang.Override
+Controlador.controladorValidar ..> Modelo.Cliente
+Controlador.controladorValidar ..> Modelo.Menu
+Controlador.controladorValidar ..> Modelo.Perfil
+Controlador.controladorValidar ..> Modelo.Usuario
+Controlador.controladorValidar ..> ModeloDAO.ObtenerUsuarioMaximo
+Controlador.controladorValidar ..> ModeloDAO.ValidarMenuDAO
+Controlador.controladorValidar ..> ModeloDAO.ValidarUsuario
+Controlador.controladorValidar ..> ModeloDAO.agregarClienteActivar
+Controlador.controladorValidar ..> ModeloDAO.agregarUsuarioActivarCuenta
+Controlador.controladorValidar ..> ModeloDAO.revisarDatosRegistro
+Controlador.controladorValidar ..> java.io.IOException
+Controlador.controladorValidar ..> java.io.PrintWriter
+Controlador.controladorValidar ..> java.util.ArrayList
+Controlador.controladorValidar ..> java.util.HashMap
+Controlador.controladorValidar ..> java.util.List
+Controlador.controladorValidar ..> java.util.Map
+Controlador.controladorValidar ..> java.util.Properties
+Controlador.controladorValidar ..> javax.activation.DataHandler
+Controlador.controladorValidar ..> javax.activation.FileDataSource
+Controlador.controladorValidar ..> javax.mail.BodyPart
+Controlador.controladorValidar ..> javax.mail.Message
+Controlador.controladorValidar ..> javax.mail.Session
+Controlador.controladorValidar ..> javax.mail.Transport
+Controlador.controladorValidar ..> javax.mail.internet.InternetAddress
+Controlador.controladorValidar ..> javax.mail.internet.MimeBodyPart
+Controlador.controladorValidar ..> javax.mail.internet.MimeMessage
+Controlador.controladorValidar ..> javax.mail.internet.MimeMultipart
+Controlador.controladorValidar ..> javax.servlet.ServletException
+Controlador.controladorValidar --|> javax.servlet.http.HttpServlet
+Controlador.controladorValidar ..> javax.servlet.http.HttpServletRequest
+Controlador.controladorValidar ..> javax.servlet.http.HttpServletResponse
+Controlador.controladorValidar ..> javax.servlet.http.HttpSession
+Controlador.controladorVistasCliente ..> java.lang.Override
+Controlador.controladorVistasCliente ..> Modelo.Producto
+Controlador.controladorVistasCliente ..> ModeloDAO.ListaProductosGeneralById
+Controlador.controladorVistasCliente ..> ModeloDAO.productosListarAdmin
+Controlador.controladorVistasCliente ..> java.io.IOException
+Controlador.controladorVistasCliente ..> java.io.PrintWriter
+Controlador.controladorVistasCliente ..> java.util.ArrayList
+Controlador.controladorVistasCliente ..> java.util.List
+Controlador.controladorVistasCliente ..> javax.servlet.ServletException
+Controlador.controladorVistasCliente --|> javax.servlet.http.HttpServlet
+Controlador.controladorVistasCliente ..> javax.servlet.http.HttpServletRequest
+Controlador.controladorVistasCliente ..> javax.servlet.http.HttpServletResponse
+Modelo.Cliente --|> Modelo.Usuario
+Modelo.Empleado --|> Modelo.Usuario
+Modelo.Md5 ..> java.security.MessageDigest
+Modelo.Md5 ..> java.util.Arrays
+Modelo.Md5 ..> javax.crypto.Cipher
+Modelo.Md5 ..> javax.crypto.SecretKey
+Modelo.Md5 ..> javax.crypto.spec.SecretKeySpec
+Modelo.Md5 ..> org.apache.commons.codec.binary.Base64
+Modelo.Menu --|> Modelo.Perfil
+Modelo.MenuPerfil --|> Modelo.Menu
+Modelo.Pedido --|> Modelo.Usuario
+Modelo.Producto --|> Modelo.Categoria
+ModeloDAO.ListaProductosGeneralById ..> java.lang.Override
+ModeloDAO.ListaProductosGeneralById ..> Config.ConexionMySQL
+ModeloDAO.ListaProductosGeneralById ..> Modelo.Producto
+ModeloDAO.ListaProductosGeneralById ..> java.sql.CallableStatement
+ModeloDAO.ListaProductosGeneralById ..> java.sql.Connection
+ModeloDAO.ListaProductosGeneralById ..> java.sql.ResultSet
+ModeloDAO.ListaProductosGeneralById ..> java.util.ArrayList
+ModeloDAO.ListaProductosGeneralById ..> java.util.List
+ModeloDAO.ListaProductosGeneralById --|> Interfaces.IListarById
+ModeloDAO.ObtenerUsuarioMaximo ..> java.lang.Override
+ModeloDAO.ObtenerUsuarioMaximo ..> Config.ConexionMySQL
+ModeloDAO.ObtenerUsuarioMaximo ..> java.sql.CallableStatement
+ModeloDAO.ObtenerUsuarioMaximo ..> java.sql.Connection
+ModeloDAO.ObtenerUsuarioMaximo ..> java.sql.ResultSet
+ModeloDAO.ObtenerUsuarioMaximo --|> Interfaces.IObtenerMaxId
+ModeloDAO.PerfilAsignarMenuDAO ..> java.lang.Override
+ModeloDAO.PerfilAsignarMenuDAO ..> Config.ConexionMySQL
+ModeloDAO.PerfilAsignarMenuDAO ..> Modelo.MenuPerfil
+ModeloDAO.PerfilAsignarMenuDAO ..> java.sql.CallableStatement
+ModeloDAO.PerfilAsignarMenuDAO ..> java.sql.Connection
+ModeloDAO.PerfilAsignarMenuDAO ..> java.sql.Types
+ModeloDAO.PerfilAsignarMenuDAO --|> Interfaces.IAgregarGeneral
+ModeloDAO.PerfilEditarDAO ..> java.lang.Override
+ModeloDAO.PerfilEditarDAO ..> Config.ConexionMySQL
+ModeloDAO.PerfilEditarDAO ..> Modelo.MenuPerfil
+ModeloDAO.PerfilEditarDAO ..> java.sql.CallableStatement
+ModeloDAO.PerfilEditarDAO ..> java.sql.Connection
+ModeloDAO.PerfilEditarDAO ..> java.sql.ResultSet
+ModeloDAO.PerfilEditarDAO ..> java.util.ArrayList
+ModeloDAO.PerfilEditarDAO ..> java.util.List
+ModeloDAO.PerfilEditarDAO --|> Interfaces.IListarById
+ModeloDAO.ValidarMenuDAO ..> java.lang.Override
+ModeloDAO.ValidarMenuDAO ..> Config.ConexionMySQL
+ModeloDAO.ValidarMenuDAO ..> Modelo.Menu
+ModeloDAO.ValidarMenuDAO ..> java.sql.CallableStatement
+ModeloDAO.ValidarMenuDAO ..> java.sql.Connection
+ModeloDAO.ValidarMenuDAO ..> java.sql.ResultSet
+ModeloDAO.ValidarMenuDAO ..> java.util.ArrayList
+ModeloDAO.ValidarMenuDAO ..> java.util.List
+ModeloDAO.ValidarMenuDAO --|> Interfaces.IValidarMenu
+ModeloDAO.ValidarUsuario ..> java.lang.Override
+ModeloDAO.ValidarUsuario ..> Config.ConexionMySQL
+ModeloDAO.ValidarUsuario ..> Modelo.Md5
+ModeloDAO.ValidarUsuario ..> Modelo.Usuario
+ModeloDAO.ValidarUsuario ..> java.sql.CallableStatement
+ModeloDAO.ValidarUsuario ..> java.sql.Connection
+ModeloDAO.ValidarUsuario ..> java.sql.ResultSet
+ModeloDAO.ValidarUsuario ..> java.sql.Types
+ModeloDAO.ValidarUsuario --|> Interfaces.IValidarUsuario
+ModeloDAO.actualizarPerfil ..> java.lang.Override
+ModeloDAO.actualizarPerfil ..> Config.ConexionMySQL
+ModeloDAO.actualizarPerfil ..> Modelo.Perfil
+ModeloDAO.actualizarPerfil ..> java.sql.CallableStatement
+ModeloDAO.actualizarPerfil ..> java.sql.Connection
+ModeloDAO.actualizarPerfil ..> java.sql.Types
+ModeloDAO.actualizarPerfil --|> Interfaces.IEditarGeneral
+ModeloDAO.actualizarProducto ..> java.lang.Override
+ModeloDAO.actualizarProducto ..> Config.ConexionMySQL
+ModeloDAO.actualizarProducto ..> Modelo.Producto
+ModeloDAO.actualizarProducto ..> java.sql.CallableStatement
+ModeloDAO.actualizarProducto ..> java.sql.Connection
+ModeloDAO.actualizarProducto ..> java.sql.Types
+ModeloDAO.actualizarProducto --|> Interfaces.IEditarGeneral
+ModeloDAO.agregarCategoria ..> java.lang.Override
+ModeloDAO.agregarCategoria ..> Config.ConexionMySQL
+ModeloDAO.agregarCategoria ..> Modelo.Categoria
+ModeloDAO.agregarCategoria ..> java.sql.CallableStatement
+ModeloDAO.agregarCategoria ..> java.sql.Connection
+ModeloDAO.agregarCategoria ..> java.sql.Types
+ModeloDAO.agregarCategoria --|> Interfaces.IAgregarGeneral
+ModeloDAO.agregarClienteActivar ..> java.lang.Override
+ModeloDAO.agregarClienteActivar ..> Config.ConexionMySQL
+ModeloDAO.agregarClienteActivar ..> Modelo.Cliente
+ModeloDAO.agregarClienteActivar ..> java.sql.CallableStatement
+ModeloDAO.agregarClienteActivar ..> java.sql.Connection
+ModeloDAO.agregarClienteActivar ..> java.sql.ResultSet
+ModeloDAO.agregarClienteActivar --|> Interfaces.IAgregarCliente
+ModeloDAO.agregarPerfil ..> java.lang.Override
+ModeloDAO.agregarPerfil ..> Config.ConexionMySQL
+ModeloDAO.agregarPerfil ..> Modelo.Perfil
+ModeloDAO.agregarPerfil ..> java.sql.CallableStatement
+ModeloDAO.agregarPerfil ..> java.sql.Connection
+ModeloDAO.agregarPerfil ..> java.sql.Types
+ModeloDAO.agregarPerfil --|> Interfaces.IAgregarGeneral
+ModeloDAO.agregarProducto ..> java.lang.Override
+ModeloDAO.agregarProducto ..> Config.ConexionMySQL
+ModeloDAO.agregarProducto ..> Modelo.Producto
+ModeloDAO.agregarProducto ..> java.sql.CallableStatement
+ModeloDAO.agregarProducto ..> java.sql.Connection
+ModeloDAO.agregarProducto ..> java.sql.Types
+ModeloDAO.agregarProducto --|> Interfaces.IAgregarGeneral
+ModeloDAO.agregarUsuarioActivarCuenta ..> java.lang.Override
+ModeloDAO.agregarUsuarioActivarCuenta ..> Config.ConexionMySQL
+ModeloDAO.agregarUsuarioActivarCuenta ..> Modelo.Md5
+ModeloDAO.agregarUsuarioActivarCuenta ..> Modelo.Usuario
+ModeloDAO.agregarUsuarioActivarCuenta ..> java.sql.CallableStatement
+ModeloDAO.agregarUsuarioActivarCuenta ..> java.sql.Connection
+ModeloDAO.agregarUsuarioActivarCuenta --|> Interfaces.IAgregarUsuario
+ModeloDAO.buscarCategoria ..> java.lang.Override
+ModeloDAO.buscarCategoria ..> Config.ConexionMySQL
+ModeloDAO.buscarCategoria ..> Modelo.Categoria
+ModeloDAO.buscarCategoria ..> java.sql.CallableStatement
+ModeloDAO.buscarCategoria ..> java.sql.Connection
+ModeloDAO.buscarCategoria ..> java.sql.ResultSet
+ModeloDAO.buscarCategoria ..> java.util.ArrayList
+ModeloDAO.buscarCategoria ..> java.util.List
+ModeloDAO.buscarCategoria --|> Interfaces.IBuscar
+ModeloDAO.buscarProductoAdmin ..> java.lang.Override
+ModeloDAO.buscarProductoAdmin ..> Config.ConexionMySQL
+ModeloDAO.buscarProductoAdmin ..> Modelo.Producto
+ModeloDAO.buscarProductoAdmin ..> java.sql.CallableStatement
+ModeloDAO.buscarProductoAdmin ..> java.sql.Connection
+ModeloDAO.buscarProductoAdmin ..> java.sql.ResultSet
+ModeloDAO.buscarProductoAdmin ..> java.util.ArrayList
+ModeloDAO.buscarProductoAdmin ..> java.util.List
+ModeloDAO.buscarProductoAdmin --|> Interfaces.IBuscar
+ModeloDAO.categoriaListarAdmin ..> java.lang.Override
+ModeloDAO.categoriaListarAdmin ..> Config.ConexionMySQL
+ModeloDAO.categoriaListarAdmin ..> Modelo.Categoria
+ModeloDAO.categoriaListarAdmin ..> java.sql.CallableStatement
+ModeloDAO.categoriaListarAdmin ..> java.sql.Connection
+ModeloDAO.categoriaListarAdmin ..> java.sql.ResultSet
+ModeloDAO.categoriaListarAdmin ..> java.util.ArrayList
+ModeloDAO.categoriaListarAdmin ..> java.util.List
+ModeloDAO.categoriaListarAdmin --|> Interfaces.IListar
+ModeloDAO.deshabilitarPerfil ..> java.lang.Override
+ModeloDAO.deshabilitarPerfil ..> Config.ConexionMySQL
+ModeloDAO.deshabilitarPerfil ..> Modelo.Perfil
+ModeloDAO.deshabilitarPerfil ..> java.sql.CallableStatement
+ModeloDAO.deshabilitarPerfil ..> java.sql.Connection
+ModeloDAO.deshabilitarPerfil --|> Interfaces.ICambiarEstado
+ModeloDAO.editarCategoria ..> java.lang.Override
+ModeloDAO.editarCategoria ..> Config.ConexionMySQL
+ModeloDAO.editarCategoria ..> Modelo.Categoria
+ModeloDAO.editarCategoria ..> java.sql.CallableStatement
+ModeloDAO.editarCategoria ..> java.sql.Connection
+ModeloDAO.editarCategoria ..> java.sql.Types
+ModeloDAO.editarCategoria --|> Interfaces.IEditarGeneral
+ModeloDAO.eliminarCategoria ..> java.lang.Override
+ModeloDAO.eliminarCategoria ..> Config.ConexionMySQL
+ModeloDAO.eliminarCategoria ..> Modelo.Categoria
+ModeloDAO.eliminarCategoria ..> java.sql.CallableStatement
+ModeloDAO.eliminarCategoria ..> java.sql.Connection
+ModeloDAO.eliminarCategoria --|> Interfaces.ICambiarEstado
+ModeloDAO.eliminarProducto ..> java.lang.Override
+ModeloDAO.eliminarProducto ..> Config.ConexionMySQL
+ModeloDAO.eliminarProducto ..> Modelo.Producto
+ModeloDAO.eliminarProducto ..> java.sql.CallableStatement
+ModeloDAO.eliminarProducto ..> java.sql.Connection
+ModeloDAO.eliminarProducto --|> Interfaces.ICambiarEstado
+ModeloDAO.filtrarPerfil ..> java.lang.Override
+ModeloDAO.filtrarPerfil ..> Config.ConexionMySQL
+ModeloDAO.filtrarPerfil ..> Modelo.Menu
+ModeloDAO.filtrarPerfil ..> Modelo.Perfil
+ModeloDAO.filtrarPerfil ..> java.sql.CallableStatement
+ModeloDAO.filtrarPerfil ..> java.sql.Connection
+ModeloDAO.filtrarPerfil ..> java.sql.ResultSet
+ModeloDAO.filtrarPerfil ..> java.util.ArrayList
+ModeloDAO.filtrarPerfil ..> java.util.List
+ModeloDAO.filtrarPerfil --|> Interfaces.IBuscar
+ModeloDAO.habilitarPerfil ..> java.lang.Override
+ModeloDAO.habilitarPerfil ..> Config.ConexionMySQL
+ModeloDAO.habilitarPerfil ..> Modelo.Perfil
+ModeloDAO.habilitarPerfil ..> java.sql.CallableStatement
+ModeloDAO.habilitarPerfil ..> java.sql.Connection
+ModeloDAO.habilitarPerfil --|> Interfaces.ICambiarEstado
+ModeloDAO.listarCategoriaPorID ..> java.lang.Override
+ModeloDAO.listarCategoriaPorID ..> Config.ConexionMySQL
+ModeloDAO.listarCategoriaPorID ..> Modelo.Categoria
+ModeloDAO.listarCategoriaPorID ..> java.sql.CallableStatement
+ModeloDAO.listarCategoriaPorID ..> java.sql.Connection
+ModeloDAO.listarCategoriaPorID ..> java.sql.ResultSet
+ModeloDAO.listarCategoriaPorID ..> java.util.ArrayList
+ModeloDAO.listarCategoriaPorID ..> java.util.List
+ModeloDAO.listarCategoriaPorID --|> Interfaces.IListarById
+ModeloDAO.listarMenu ..> java.lang.Override
+ModeloDAO.listarMenu ..> Config.ConexionMySQL
+ModeloDAO.listarMenu ..> Modelo.Menu
+ModeloDAO.listarMenu ..> java.sql.CallableStatement
+ModeloDAO.listarMenu ..> java.sql.Connection
+ModeloDAO.listarMenu ..> java.sql.ResultSet
+ModeloDAO.listarMenu ..> java.util.ArrayList
+ModeloDAO.listarMenu ..> java.util.List
+ModeloDAO.listarMenu --|> Interfaces.IListar
+ModeloDAO.listarPerfilId ..> java.lang.Override
+ModeloDAO.listarPerfilId ..> Config.ConexionMySQL
+ModeloDAO.listarPerfilId ..> Modelo.Perfil
+ModeloDAO.listarPerfilId ..> java.sql.CallableStatement
+ModeloDAO.listarPerfilId ..> java.sql.Connection
+ModeloDAO.listarPerfilId ..> java.sql.ResultSet
+ModeloDAO.listarPerfilId ..> java.util.ArrayList
+ModeloDAO.listarPerfilId ..> java.util.List
+ModeloDAO.listarPerfilId --|> Interfaces.IListarById
+ModeloDAO.listarUsuariosRoles ..> java.lang.Override
+ModeloDAO.listarUsuariosRoles ..> Config.ConexionMySQL
+ModeloDAO.listarUsuariosRoles ..> Modelo.Perfil
+ModeloDAO.listarUsuariosRoles ..> java.sql.CallableStatement
+ModeloDAO.listarUsuariosRoles ..> java.sql.Connection
+ModeloDAO.listarUsuariosRoles ..> java.sql.ResultSet
+ModeloDAO.listarUsuariosRoles ..> java.util.ArrayList
+ModeloDAO.listarUsuariosRoles ..> java.util.List
+ModeloDAO.listarUsuariosRoles --|> Interfaces.IListar
+ModeloDAO.mostrarCategoria ..> java.lang.Override
+ModeloDAO.mostrarCategoria ..> Config.ConexionMySQL
+ModeloDAO.mostrarCategoria ..> Modelo.Categoria
+ModeloDAO.mostrarCategoria ..> java.sql.CallableStatement
+ModeloDAO.mostrarCategoria ..> java.sql.Connection
+ModeloDAO.mostrarCategoria --|> Interfaces.ICambiarEstado
+ModeloDAO.mostrarProducto ..> java.lang.Override
+ModeloDAO.mostrarProducto ..> Config.ConexionMySQL
+ModeloDAO.mostrarProducto ..> Modelo.Producto
+ModeloDAO.mostrarProducto ..> java.sql.CallableStatement
+ModeloDAO.mostrarProducto ..> java.sql.Connection
+ModeloDAO.mostrarProducto --|> Interfaces.ICambiarEstado
+ModeloDAO.ocultarCategoria ..> java.lang.Override
+ModeloDAO.ocultarCategoria ..> Config.ConexionMySQL
+ModeloDAO.ocultarCategoria ..> Modelo.Categoria
+ModeloDAO.ocultarCategoria ..> java.sql.CallableStatement
+ModeloDAO.ocultarCategoria ..> java.sql.Connection
+ModeloDAO.ocultarCategoria --|> Interfaces.ICambiarEstado
+ModeloDAO.ocultarProducto ..> java.lang.Override
+ModeloDAO.ocultarProducto ..> Config.ConexionMySQL
+ModeloDAO.ocultarProducto ..> Modelo.Producto
+ModeloDAO.ocultarProducto ..> java.sql.CallableStatement
+ModeloDAO.ocultarProducto ..> java.sql.Connection
+ModeloDAO.ocultarProducto --|> Interfaces.ICambiarEstado
+ModeloDAO.perfilEliminar ..> java.lang.Override
+ModeloDAO.perfilEliminar ..> Config.ConexionMySQL
+ModeloDAO.perfilEliminar ..> Modelo.Perfil
+ModeloDAO.perfilEliminar ..> java.sql.CallableStatement
+ModeloDAO.perfilEliminar ..> java.sql.Connection
+ModeloDAO.perfilEliminar --|> Interfaces.ICambiarEstado
+ModeloDAO.probandoDiccionarios ..> Modelo.Usuario
+ModeloDAO.probandoDiccionarios ..> java.util.ArrayList
+ModeloDAO.probandoDiccionarios ..> java.util.HashMap
+ModeloDAO.probandoDiccionarios ..> java.util.List
+ModeloDAO.probandoDiccionarios ..> java.util.Map
+ModeloDAO.productoListarById ..> java.lang.Override
+ModeloDAO.productoListarById ..> Config.ConexionMySQL
+ModeloDAO.productoListarById ..> Modelo.Producto
+ModeloDAO.productoListarById ..> java.sql.CallableStatement
+ModeloDAO.productoListarById ..> java.sql.Connection
+ModeloDAO.productoListarById ..> java.sql.ResultSet
+ModeloDAO.productoListarById ..> java.util.ArrayList
+ModeloDAO.productoListarById ..> java.util.List
+ModeloDAO.productoListarById --|> Interfaces.IListarById
+ModeloDAO.productosListarAdmin ..> java.lang.Override
+ModeloDAO.productosListarAdmin ..> Config.ConexionMySQL
+ModeloDAO.productosListarAdmin ..> Modelo.Producto
+ModeloDAO.productosListarAdmin ..> java.sql.CallableStatement
+ModeloDAO.productosListarAdmin ..> java.sql.Connection
+ModeloDAO.productosListarAdmin ..> java.sql.ResultSet
+ModeloDAO.productosListarAdmin ..> java.util.ArrayList
+ModeloDAO.productosListarAdmin ..> java.util.List
+ModeloDAO.productosListarAdmin --|> Interfaces.IListar
+ModeloDAO.revisarDatosRegistro ..> java.lang.Override
+ModeloDAO.revisarDatosRegistro ..> Config.ConexionMySQL
+ModeloDAO.revisarDatosRegistro ..> Modelo.Cliente
+ModeloDAO.revisarDatosRegistro ..> Modelo.Usuario
+ModeloDAO.revisarDatosRegistro ..> java.sql.CallableStatement
+ModeloDAO.revisarDatosRegistro ..> java.sql.Connection
+ModeloDAO.revisarDatosRegistro ..> java.sql.ResultSet
+ModeloDAO.revisarDatosRegistro ..> java.sql.Types
+ModeloDAO.revisarDatosRegistro --|> Interfaces.IValidarDatosRegistro
+Interfaces.IBuscar ..> java.util.List
+Interfaces.IConexion ..> java.sql.Connection
+Interfaces.IListar ..> java.util.List
+Interfaces.IListarById ..> java.util.List
+Interfaces.IValidarDatosRegistro ..> Modelo.Cliente
+Interfaces.IValidarMenu ..> java.util.List
+Interfaces.IValidarUsuario ..> Modelo.Usuario
+@enduml

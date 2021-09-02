@@ -24,6 +24,10 @@
         <servlet-name>controladorVistasCliente</servlet-name>
         <servlet-class>Controlador.controladorVistasCliente</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorTrabajador</servlet-name>
+        <servlet-class>Controlador.ControladorTrabajador</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controladorValidar</servlet-name>
         <url-pattern>/controladorValidar</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>controladorVistasCliente</servlet-name>
         <url-pattern>/controladorVistasCliente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorTrabajador</servlet-name>
+        <url-pattern>/ControladorTrabajador</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

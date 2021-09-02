@@ -17,8 +17,8 @@ public class Empleado extends Usuario {
     private String celularEmpleado;
     private String dniEmpleado;
 
-    public Empleado(int idEmpleado, String nombreEmpleado, String apellidoEmpleado, String celularEmpleado, String dniEmpleado, int idUser, int idPerfil, String mailUser, String passwordUser, int usuEstado, int pError, String pMsg_error) {
-        super(idUser, idPerfil, mailUser, passwordUser, usuEstado, pError, pMsg_error);
+    public Empleado(int idEmpleado, String nombreEmpleado, String apellidoEmpleado, String celularEmpleado, String dniEmpleado, int idUser, int idPerfil, String idPerfilString, String mailUser, String passwordUser, int usuEstado, String usuEstadoString, int pError, String pMsg_error) {
+        super(idUser, idPerfil, idPerfilString, mailUser, passwordUser, usuEstado, usuEstadoString, pError, pMsg_error);
         this.idEmpleado = idEmpleado;
         this.nombreEmpleado = nombreEmpleado;
         this.apellidoEmpleado = apellidoEmpleado;
@@ -33,6 +33,10 @@ public class Empleado extends Usuario {
         this.celularEmpleado = celularEmpleado;
         this.dniEmpleado = dniEmpleado;
     }
+
+ 
+
+   
 
     public Empleado() {
     }

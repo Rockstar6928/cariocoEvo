@@ -19,8 +19,8 @@ public class Cliente extends Usuario {
     private String fechaNacimiento;
     private String direccionCliente;
 
-    public Cliente(int idCliente, String nombreCliente, String apellidoCliente, String celularCliente, String dniCliente, String fechaNacimiento, String direccionCliente, int idUser, int idPerfil, String mailUser, String passwordUser, int usuEstado, int pError, String pMsg_error) {
-        super(idUser, idPerfil, mailUser, passwordUser, usuEstado, pError, pMsg_error);
+    public Cliente(int idCliente, String nombreCliente, String apellidoCliente, String celularCliente, String dniCliente, String fechaNacimiento, String direccionCliente, int idUser, int idPerfil, String idPerfilString, String mailUser, String passwordUser, int usuEstado, String usuEstadoString, int pError, String pMsg_error) {
+        super(idUser, idPerfil, idPerfilString, mailUser, passwordUser, usuEstado, usuEstadoString, pError, pMsg_error);
         this.idCliente = idCliente;
         this.nombreCliente = nombreCliente;
         this.apellidoCliente = apellidoCliente;
@@ -39,6 +39,10 @@ public class Cliente extends Usuario {
         this.fechaNacimiento = fechaNacimiento;
         this.direccionCliente = direccionCliente;
     }
+
+ 
+
+   
 
     public Cliente() {
     }
